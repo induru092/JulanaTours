@@ -20,7 +20,7 @@ public class AwsConfig {
     private String region;
 
     @Bean
-    public S3Client s3Client() {
+    public S3Client S3Client() {
         return S3Client.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)))
