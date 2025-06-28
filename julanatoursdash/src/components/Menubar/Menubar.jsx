@@ -2,7 +2,7 @@ import React from 'react';
 import './Menubar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import {assets} from '../../assets/assets';
+import {assets} from '../../assets/assests.js';
 
 export const Menubar = () => {
   return (

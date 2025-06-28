@@ -1,5 +1,5 @@
 import React from 'react';
-import Menubar from './components/Menubar/Menubar';
+import Menubar from './components/Menubar/Menubar.jsx';
 
 const App = () => {
   return (
