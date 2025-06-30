@@ -3,42 +3,36 @@ import './Menubar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import {assets} from '../../assets/assests.js';
+import { Link } from 'react-router-dom';
 
 export const Menubar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
-  <div className="container-fluid">
-    <img src={assets.logo} alt="" className='logo' height={48} width={48}/>
+  <div className="container">
+    <img src={assets.logo} alt="" className='mx-2' height={48} width={48}/>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#">Home</a>
+          <Link className="nav-link"  to="/">Home</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">Link</a>
-        </li>
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">Action</a></li>
-            <li><a className="dropdown-item" href="#">Another action</a></li>
-            <li><hr className="dropdown-divider" /></li>
-            <li><a className="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+          <Link className="nav-link" to="/explore">Explore</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+          <Link className="nav-link" to="/contact">Contact Us</Link>
         </li>
       </ul>
-      <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-        <button className="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <div className="d-flex align-items-center gap-4">
+        <div className="position-relative">
+          <img src={assets.cart} alt="" height={32} width={32} className='position-relative'/>
+          <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning'>5</span>
+        </div>
+        <button className='btn btn-outline-primary'>Login</button>
+        <button className='btn btn-outline-success'>Register</button>
+      </div>
     </div>
   </div>
 </nav>
