@@ -33,7 +33,7 @@
 
 
 import React from 'react';
-import { categories } from '../../assets/assets';
+import { categories } from '../../assets/assests.js';
 
 export const ExploreMenu = () => {
   return (
