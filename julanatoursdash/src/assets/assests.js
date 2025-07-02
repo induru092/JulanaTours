@@ -13,12 +13,12 @@ export const assets = {
 
 export const categories = [
    {
-     category: " Bus1",
-     icon: bus1
+        category: " Bus1",
+        icon: bus1
    },
    {
-     category: "Bus2",
-     icon: bus2
+         category: "Bus2",
+         icon: bus2
     },
     {
         category: "Van",
