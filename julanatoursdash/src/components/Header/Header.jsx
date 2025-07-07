@@ -7,7 +7,7 @@ export const Header = () => {
         <div className="container-fluid py-5">
             <h1 className='display-5 fw-bold'>Rent Your Vehicle Here!</h1>
             <p className="col-md-8 fs-4">Welcome to our vehicle rental service! We offer a wide range of vehicles to suit your needs, whether you're looking for a car, van, or truck. Our easy-to-use platform allows you to browse and book vehicles quickly and conveniently.</p>
-            <Link to="/explore" className="btn btn-primary btn-lg" type="button">Explore</Link>
+            <Link to="/explore" className="btn btn-primary">Explore</Link>
         </div>
     </div>
   )
