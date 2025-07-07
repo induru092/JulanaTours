@@ -28,7 +28,7 @@ public class VehicleController {
 
     @PostMapping
     public VehicleResponse addVehicle(@RequestPart("vehicle") String vehicleString,
-                                @RequestPart("file") MultipartFile file) {
+                                      @RequestPart("file") MultipartFile file) {
         ObjectMapper objectMapper = new ObjectMapper();
         VehicleRequest request = null;
         try {

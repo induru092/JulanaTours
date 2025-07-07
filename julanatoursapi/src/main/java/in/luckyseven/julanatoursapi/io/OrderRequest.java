@@ -8,8 +8,11 @@ import java.awt.*;
 @Builder
 @Data
 public class OrderRequest {
-    private String UserId;
     private List<OrderItem> orderedItems;
     private String UserAddress;
     private double amount;
+    private String email;
+    private String phoneNumber;
+    private String orderStatus;
+
 }
