@@ -2,8 +2,8 @@ import React from 'react';
 import Menubar from './components/Menubar/Menubar.jsx';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home.jsx';
-import ContactUs from './pages/Contact/ContactUs.jsx';
-import ExploreVehicle from './pages/ExploreVehicle/ExploreVehicle.jsx';
+import ContactUs from './components/Contact/ContactUs.jsx';
+import ExploreVehicle from './components/ExploreVehicle/ExploreVehicle.jsx';
 
 const App = () => {
   return (
