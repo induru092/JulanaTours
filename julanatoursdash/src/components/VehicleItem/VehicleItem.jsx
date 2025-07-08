@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const VehicleItem = ({name, description, id , imageUrl, price}) => {
   return (
@@ -21,7 +22,7 @@ export const VehicleItem = ({name, description, id , imageUrl, price}) => {
                 </div>
             </div>
             <div className="card-footer d-flex justify-content-between bg-light">
-                <button className="btn btn-primary btn-sm">View Vehicle</button>
+                <Link className="btn btn-primary btn-sm" to={'/vehicle/${id}'}>View Vehicle</Link>
                 <button className="btn btn-outline-secondary btn-sm"><i className="bi bi-heart"></i></button>
             </div>
         </div>
