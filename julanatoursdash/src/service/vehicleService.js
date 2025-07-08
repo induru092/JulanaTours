@@ -11,3 +11,13 @@ export const fetchVehiclesList = async () => {
         throw error;
     }
 }
+
+export const fetchVehicleDetails = async (id) => {
+    try {
+        const response = await axios.get(API_URL+"/"+id);
+        return response.data;
+    } catch (error) {
+        console.log('Error fetching vehicle details:', error);
+        throw error;
+    }   
+}
