@@ -7,14 +7,14 @@ export const fetchVehiclesList = async () => {
         const response = await axios.get(API_URL);
         return response.data;
     } catch (error) {
-        console.log('Error'.error);
+        console.log('Error fetching vehicle list:', error);
         throw error;
     }
 }
 
 export const fetchVehicleDetails = async (id) => {
     try {
-        const response = await axios.get(API_URL+"/"+id);
+        const response = await axios.get('${API_URL}/${id}');
         return response.data;
     } catch (error) {
         console.log('Error fetching vehicle details:', error);

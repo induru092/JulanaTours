@@ -9,11 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 export const VehicleDetails = () => {
     const {id} = useParams();
 
-    const [data, setData] = useState(null);
+    const [data, setData] = useState({});
     
 
     useEffect(() => {
-        loadVehicleDetails = async () => {
+        const loadVehicleDetails = async () => {
             try {
                 const vehicleData = await fetchVehicleDetails(id);
                 setData(vehicleData);
