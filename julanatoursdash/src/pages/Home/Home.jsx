@@ -1,10 +1,14 @@
 import React from 'react';
-import { Header } from '../../components/Header/Header.jsx';
+import Header from '../../components/Header/Header';
+import ExploreMenu from '../../components/ExploreMenu/ExploreMenu';
+import VehicleDisplay from '../../components/VehicleDisplay/VehicleDisplay';
 
-export const Home = () => {
+const Home = () => {
   return (
     <main className='container'>
-      <Header />
+      <Header/>
+      <ExploreMenu/>
+      <VehicleDisplay />
     </main>
   )
 }
