@@ -18,7 +18,8 @@ public class OrderServiceimpl implements OrderService{
     private  OrderRepository orderRepository;
     @Autowired
     private  UserService userService;
-
+    @Autowired
+    private CartRespository cartRespository;
 
     @Value("${razorpay_key}")
     private String RAZORPAY_KEY;
@@ -44,6 +45,20 @@ public class OrderServiceimpl implements OrderService{
         return convertToResponse(newOrder);
 
 
+    }
+
+    @Override
+    public void verifyPayment(Map<String, String>) paymentData, String status) {
+        String razorpayOrderId = paymentData.get("razorpay_order_id");
+        OrderEntity existingOrder = orderRepository.findByRazorpayOrderid(razorpayOrderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        existingOrder.setPaymentStatus(status);
+        existingOrder.setRazorpaySignature(paymentData.get("razorpay_signature"));
+        existingOrder.setRazorpayPaymentId(paymentData.get("razorpay_payment_id"));
+        orderRepository.save(existingOrder);
+        if("paid".equalsIgnoreCase(status)){
+            cartRespository.deleteByUserId(existingOrder.getUserId());
+        }
     }
 
     private OrderResponse convertToResponse(OrderEntity newOrder) {

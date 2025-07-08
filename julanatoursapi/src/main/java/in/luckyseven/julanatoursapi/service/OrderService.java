@@ -4,5 +4,7 @@ import in.luckyseven.julanatoursapi.io.OrderRequest;
 import in.luckyseven.julanatoursapi.io.OrderResponse;
 
 public class interface OrderService {
-    OrderResponse createOrderWithPayment(OrderRequest request);
+    OrderResponse createOrderWithPayment(OrderRequest request) throws RazorpayException;
+
+    void verifyPayment(Map<String, String>) paymentData, String status);
 }

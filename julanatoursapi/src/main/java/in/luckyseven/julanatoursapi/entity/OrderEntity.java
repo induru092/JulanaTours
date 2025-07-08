@@ -20,6 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
         private String paymentStatus;
         private String razorpayOrderId;
         private String razorpaySignature;
+        private String razorpayPaymentId;
         private String orderStatus;
 
     }
