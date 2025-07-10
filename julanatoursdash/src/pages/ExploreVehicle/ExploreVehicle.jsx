@@ -1,8 +1,9 @@
 import React from 'react';
+import VehicleDisplay from '../../components/VehicleDisplay/VehicleDisply';
 
 export const ExploreVehicle = () => {
   return (
-    <div>ExploreVehicle</div>
+    <VehicleDisplay />
   )
 }
 
