@@ -2,13 +2,17 @@ import React, { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext';
 import VehicleItem from '../VehicleItem/VehicleItem';
 
-export const VehicleDisply = () => {
+const VehicleDisply = ({category}) => {
     const {vehicleList} = useContext(StoreContext);
+    const filteredVehicles = vehicleList.filter(vehicle => {
+        category === 'All' || vehicle.category === category
+
+    })
   return (
     <div className="container">
         <div className="row">
-            {vehicleList.length > 0 ? (
-                vehicleList.map((vehicle, index) => (
+            {filteredVehicles.length > 0 ? (
+                filteredVehicles.map((vehicle, index) => (
                     <VehicleItem key={index} 
                     name={vehicle.name} 
                     description={vehicle.description}
