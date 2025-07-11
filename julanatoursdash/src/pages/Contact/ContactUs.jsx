@@ -3,7 +3,7 @@ import './Contact.css';
 
 export const ContactUs = () => {
   return (
-    <section className="py-5 bg-light">
+    <section className="py-5">
     <div className="container">
         <div className="row justify-content-center">
             <div className="col-lg-8">
@@ -32,7 +32,7 @@ export const ContactUs = () => {
             </div>
         </div>
     </div>
-</section>
+    </section>
   )
 }
 
