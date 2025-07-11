@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { StoreContext } from '../../context/StoreContext';
 
 export const VehicleItem = ({name, description, id , imageUrl, price}) => {
+    const {increaseQty, decreaseQty, quantities} = useContext(StoreContext);
   return (
     <div className="col-12 col-sm-6-md-4 col-lg-3 mb-4 d-flex justify-content-center">
         <div className="card" style={{"maxwidth": "320px"}}>
@@ -25,8 +27,16 @@ export const VehicleItem = ({name, description, id , imageUrl, price}) => {
             </div>
             <div className="card-footer d-flex justify-content-between bg-light">
                 <Link className="btn btn-primary btn-sm" to={'/vehicle/${id}'}>View Vehicle</Link>
-                <button className="btn btn-primary btn-sm">
-                    <i className="bi bi-plus-circle"></i></button>
+                {quantities[id] > 0 ?(
+                    <div className="d-flex align-items-center gap-2">
+                        <button className="btn btn-danger btn-5m"><i className='bi bi-dash-circle'></i></button>
+                        <span className='fw-bold'>{quantities[id]}</span>
+                        <button className="btn btn-success btn-5m"><i className='bi bi-plus-circle'></i></button>
+                    </div>
+                ) : (
+                    <button className="btn btn-primary btn-5m">
+                    <i className='bi bi-plus-circle'></i></button>                     
+                )}
             </div>
         </div>
     </div>
