@@ -9,7 +9,7 @@ export const Home = () => {
     <main className='container'>
       <Header />
       <ExploreMenu category={category} setCategory={setCategory}/>
-      <VehicleDisply/>
+      <VehicleDisply category={category} searchText={''}/>
     </main>
   )
 }

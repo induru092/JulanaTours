@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext';
-import VehicleItem from '../VehicleItem/VehicleItem';
+import VehicleItem from '../VehicleItem/VehicleItem'; 
 
-const VehicleDisply = ({category}) => {
+const VehicleDisply = ({category, searchText}) => {
     const {vehicleList} = useContext(StoreContext);
     const filteredVehicles = vehicleList.filter(vehicle => {
-        category === 'All' || vehicle.category === category
+        (category === 'All' || vehicle.category === category) &&
+        vehicle.name.toLowerCase().includes(searchText.toLowerCase())
 
     })
   return (
