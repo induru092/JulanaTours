@@ -61,6 +61,34 @@ public class OrderServiceimpl implements OrderService{
         }
     }
 
+    @Override
+    public List<OrderResponse> getUserOrders(){
+    String loggedInUserId = userService.findByUserId();
+    List<OrderEntity> list=orderRepository.findByUserId(userId);
+    return list.stream().map(entity -> convertToResponse(entity)).collect(collectors.toList());
+}
+
+    @Override
+    public void removeOrder(String orderId) {
+        orderRepository.deleteById(orderId);
+
+    }
+
+    @Override
+    public List<OrderResponse> getOrdersOfAllUsers() {
+        List<OrderEntity> list = orderRepository.findAll();
+        return list.stream().map(entity ->convertToResponse(entity)).collect(collectors.toList);
+    }
+
+    @Override
+    public void updateOrderStatus(String orderId, String status0) {
+        OrderEntity entity = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        entity.setOrderStatus(status);
+        orderRepository.save(entity);
+    }
+
+
     private OrderResponse convertToResponse(OrderEntity newOrder) {
        return OrderResponse.builder()
                 .id(newOrder.getId())
@@ -72,6 +100,7 @@ public class OrderServiceimpl implements OrderService{
                 .orderStatus(newOrder.getOrderStatus())
                 .email(newOrder.getEmail())
                 .phoneNumber(newOrder.getPhoneNumber())
+                .orderedItems(newOrder.getOrderedItems())
                 .build();
     }
 

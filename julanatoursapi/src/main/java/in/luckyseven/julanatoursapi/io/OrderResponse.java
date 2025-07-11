@@ -14,4 +14,5 @@ public class OrderResponse {
     private double amount;
     private String paymentStatus;
     private String orderStatus;
+    Private List<OrderItem> orderedItems;
 }
