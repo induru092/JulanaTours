@@ -3,6 +3,8 @@ package in.luckyseven.julanatoursapi.io;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class OrderResponse {
@@ -14,5 +16,5 @@ public class OrderResponse {
     private double amount;
     private String paymentStatus;
     private String orderStatus;
-    Private List<OrderItem> orderedItems;
+    private List<OrderItem> orderedItems;
 }

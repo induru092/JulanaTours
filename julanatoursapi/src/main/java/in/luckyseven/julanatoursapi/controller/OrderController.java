@@ -20,16 +20,18 @@ public class OrderController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponse createOrderWithPayment(@RequestBody OrderRequest request) throws RazorpayException{
-        OrderResponse response =  orderService.createOrderWithPayment(request);
+    public OrderResponse createOrderWithPayment(@RequestBody OrderRequest request) throws RazorpayException {
+        OrderResponse response = orderService.createOrderWithPayment(request);
         return response;
     }
 
     @PostMapping("/verify")
-    public void verifyPayment(@RequestBody Map<String, String> paymentData){
-        orderService.verifyPayment(paymentData, status:"Paid");
+    public void verifyPayment(@RequestBody Map<String, String> paymentData) {
+        orderService.verifyPayment(paymentData,"Paid");
 
     }
+
+
     @GetMapping
     public List<OrderResponse>getOrders(){
         return orderService.getUserOrders();

@@ -3,7 +3,7 @@ package in.luckyseven.julanatoursapi.io;
 import lombok.Builder;
 import lombok.Data;
 
-import java.awt.*;
+import java.util.List;
 
 @Builder
 @Data

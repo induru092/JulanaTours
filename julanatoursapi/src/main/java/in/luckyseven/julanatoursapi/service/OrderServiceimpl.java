@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 @AllArgsConstructor
 public class OrderServiceimpl implements OrderService{
@@ -48,7 +51,7 @@ public class OrderServiceimpl implements OrderService{
     }
 
     @Override
-    public void verifyPayment(Map<String, String>) paymentData, String status) {
+    public void verifyPayment(Map<String, String> paymentData, String status) {
         String razorpayOrderId = paymentData.get("razorpay_order_id");
         OrderEntity existingOrder = orderRepository.findByRazorpayOrderid(razorpayOrderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
