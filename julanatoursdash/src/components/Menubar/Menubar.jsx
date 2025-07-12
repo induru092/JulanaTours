@@ -26,10 +26,12 @@ export const Menubar = () => {
         </li>
       </ul>
       <div className="d-flex align-items-center gap-4">
-        <div className="position-relative">
-          <img src={assets.cart} alt="" height={32} width={32} className='position-relative'/>
-          <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning'>5</span>
+        <Link to={'/cart'}>
+            <div className="position-relative">
+            <img src={assets.cart} alt="" height={32} width={32} className='position-relative'/>
+            <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning'>5</span>
         </div>
+        </Link>
         <button className='btn btn-outline-primary'>Login</button>
         <button className='btn btn-outline-success'>Register</button>
       </div>
