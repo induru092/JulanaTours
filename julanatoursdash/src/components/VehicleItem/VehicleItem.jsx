@@ -29,12 +29,12 @@ export const VehicleItem = ({name, description, id , imageUrl, price}) => {
                 <Link className="btn btn-primary btn-sm" to={'/vehicle/${id}'}>View Vehicle</Link>
                 {quantities[id] > 0 ?(
                     <div className="d-flex align-items-center gap-2">
-                        <button className="btn btn-danger btn-5m"><i className='bi bi-dash-circle'></i></button>
+                        <button className="btn btn-danger btn-5m" onClick={() => decreaseQty(id)}><i className='bi bi-dash-circle'></i></button>
                         <span className='fw-bold'>{quantities[id]}</span>
-                        <button className="btn btn-success btn-5m"><i className='bi bi-plus-circle'></i></button>
+                        <button className="btn btn-success btn-5m"onClick={() => increaseQty(id)}><i className='bi bi-plus-circle'></i></button>
                     </div>
                 ) : (
-                    <button className="btn btn-primary btn-5m">
+                    <button className="btn btn-primary btn-5m"onClick={() => increaseQty(id)}>
                     <i className='bi bi-plus-circle'></i></button>                     
                 )}
             </div>
