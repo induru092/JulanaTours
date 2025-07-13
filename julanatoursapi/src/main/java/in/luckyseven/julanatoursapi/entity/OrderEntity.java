@@ -1,11 +1,14 @@
 package in.luckyseven.julanatoursapi.entity;
 
 
+import in.luckyseven.julanatoursapi.io.OrderItem;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-    @Document(collection = "orders")
+import java.util.List;
+
+@Document(collection = "orders")
     @Data
     @Builder
 
@@ -15,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
         private String userAddress;
         private String phoneNumber;
         private String email;
-        private List <OrderItem> orderedItems;
+        private List<OrderItem> orderedItems;
         private double amount;
         private String paymentStatus;
         private String razorpayOrderId;

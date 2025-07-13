@@ -24,7 +24,6 @@ import java.util.List;
 
     public class VehicleController {
 
-
     private final VehicleService vehicleService;
     private final ObjectMapper objectMapper;
 

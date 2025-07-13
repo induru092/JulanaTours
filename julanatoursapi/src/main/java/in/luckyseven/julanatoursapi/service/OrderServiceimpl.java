@@ -4,10 +4,15 @@ import in.luckyseven.julanatoursapi.entity.OrderEntity;
 import in.luckyseven.julanatoursapi.io.OrderRequest;
 import in.luckyseven.julanatoursapi.io.OrderResponse;
 import in.luckyseven.julanatoursapi.repository.OrderRepository;
+import jdk.jshell.Snippet;
 import lombok.AllArgsConstructor;
 import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.autoconfigure.health.HealthProperties;
+import org.springframework.boot.actuate.health.Status;
+import org.springframework.core.annotation.Order;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +27,7 @@ public class OrderServiceimpl implements OrderService{
     @Autowired
     private  UserService userService;
     @Autowired
-    private CartRespository cartRespository;
+    private CartRepository cartRespository;
 
     @Value("${razorpay_key}")
     private String RAZORPAY_KEY;
@@ -67,7 +72,7 @@ public class OrderServiceimpl implements OrderService{
     @Override
     public List<OrderResponse> getUserOrders(){
     String loggedInUserId = userService.findByUserId();
-    List<OrderEntity> list=orderRepository.findByUserId(userId);
+    List<OrderEntity> list=orderRepository.findByUserId(UserId);
     return list.stream().map(entity -> convertToResponse(entity)).collect(collectors.toList());
 }
 
@@ -84,7 +89,7 @@ public class OrderServiceimpl implements OrderService{
     }
 
     @Override
-    public void updateOrderStatus(String orderId, String status0) {
+    public void updateOrderStatus(String orderId, String status) {
         OrderEntity entity = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         entity.setOrderStatus(status);

@@ -6,7 +6,7 @@ import in.luckyseven.julanatoursapi.io.OrderResponse;
 import java.util.List;
 import java.util.Map;
 
-public class  interface OrderService{
+public interface OrderService{
     OrderResponse createOrderWithPayment(OrderRequest request) throws RazorpayException;
 
     void verifyPayment(Map<String, String> paymentData, String status);
@@ -19,5 +19,5 @@ public class  interface OrderService{
 
     List<OrderResponse> getOrdersOfAllUsers();
 
-    void updateOrderStatus(String orderId, String status0);
+    void updateOrderStatus(String orderId, String status);
 }
