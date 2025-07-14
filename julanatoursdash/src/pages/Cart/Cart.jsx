@@ -24,59 +24,61 @@ const Cart = () => {
                 
             <div className="card mb-4">
                 <div className="card-body">
-                    <div className="row cart-item mb-3">
+                    {cartItems.map((vehicle) == (
+                        <div key={vehicle.id} className="row cart-item mb-3">
                         <div className="col-md-3">
-                            <img src="https://via.placeholder.com/100" alt="Product 1" className="img-fluid rounded"/>
+                            <img 
+                                src={vehicle.imageUrl} 
+                                alt={vehicle.name} 
+                                className="img-fluid rounded"
+                                width={100}
+                            />
                         </div>
                         <div className="col-md-5">
-                            <h5 className="card-title">Product 1</h5>
-                            <p className="text-muted">Category: Electronics</p>
+                            <h5 className="card-title">{vehicle.name}</h5>
+                            <p className="text-muted">Category: {vehicle.category}</p>
                         </div>
                         <div className="col-md-2">
                             <div className="input-group">
-                                <button className="btn btn-outline-secondary btn-sm" type="button">-</button>
-                                <input style={{"maxWidth":"100px"}} type="text" className="form-control  form-control-sm text-center quantity-input"/>
-                                <button className="btn btn-outline-secondary btn-sm" type="button">+</button>
+                                <button 
+                                    className="btn btn-outline-secondary btn-sm" 
+                                    type="button"
+                                    onClick={() => decreaseQty(vehicle.id)}
+                                >
+                                    -
+                                </button>
+                                <input 
+                                    style={{"maxWidth":"100px"}} 
+                                    type="text" className="form-control  form-control-sm text-center quantity-input"
+                                    value={quantities[vehicle.id]}
+                                    readOnly
+                                />
+                                <button 
+                                    className="btn btn-outline-secondary btn-sm" 
+                                    type="button"
+                                    onClick={() => increaseQty(vehicle.id)}
+                                >
+                                    +
+                                </button>
                             </div>
                         </div>
                         <div className="col-md-2 text-end">
-                            <p className="fw-bold">$99.99</p>
+                            <p className="fw-bold">&#8377:{(vehicle.price = quantities[vehicle.id]).toFixed(2)}</p>
                             <button className="btn btn-sm btn-outline-danger">
                                     <i className="bi bi-trash"></i>
-                                </button>
+                            </button>
                         </div>
+                        <hr/>
                     </div>
-                    <hr/>
-                    <div className="row cart-item">
-                        <div className="col-md-3">
-                            <img src="https://via.placeholder.com/100" alt="Product 2" className="img-fluid rounded"/>
-                        </div>
-                        <div className="col-md-5">
-                            <h5 className="card-title">Product 2</h5>
-                            <p className="text-muted">Category: Clothing</p>
-                        </div>
-                        <div className="col-md-2">
-                            <div className="input-group">
-                                <button className="btn btn-outline-secondary btn-sm" type="button">-</button>
-                                <input style={{"maxWidth":"100px"}} type="text" className="form-control form-control-sm text-center quantity-input"/>
-                                <button className="btn btn-outline-secondary btn-sm" type="button">+</button>
-                            </div>
-                        </div>
-                        <div className="col-md-2 text-end">
-                            <p className="fw-bold">$49.99</p>
-                            <button className="btn btn-sm btn-outline-danger">
-                                    <i className="bi bi-trash"></i>
-                                </button>
-                        </div>
-                    </div>
+                   ))} 
                 </div>
            </div>
             )
            }
             <div className="text-start mb-4">
-                <a href="#" className="btn btn-outline-primary">
+                <Link to="/"  className="btn btn-outline-primary">
                     <i className="bi bi-arrow-left me-2"></i>Continue Shopping
-                </a>
+                </Link>
             </div>
         </div>
         <div className="col-lg-4">
@@ -85,22 +87,24 @@ const Cart = () => {
                     <h5 className="card-title mb-4">Order Summary</h5>
                     <div className="d-flex justify-content-between mb-3">
                         <span>Subtotal</span>
-                        <span>$199.97</span>
+                        <span>&#8377:{subtotal.toFixed(2)}</span>
                     </div>
                     <div className="d-flex justify-content-between mb-3">
                         <span>Shipping</span>
-                        <span>$10.00</span>
+                        <span>&#8377:{subtotal === 0 ? 0.0 : Shipping.toFixed(2)}</span>
                     </div>
                     <div className="d-flex justify-content-between mb-3">
                         <span>Tax</span>
-                        <span>$20.00</span>
+                        <span>&#8377:{tax.toFixed(2)}</span>
                     </div>
                     <hr/>
                     <div className="d-flex justify-content-between mb-4">
                         <strong>Total</strong>
-                        <strong>$229.97</strong>
+                        <strong>&#8377:{subtotal === 0 ? 0.0 : total.toFixed(2)}</strong>
                     </div>
-                    <button className="btn btn-primary w-100">Proceed to Checkout</button>
+                    <button className="btn btn-primary w-100" desabled={cartItems.length === 0}>
+                        Proceed to Checkout
+                    </button>
                 </div>
             </div>           
         </div>
