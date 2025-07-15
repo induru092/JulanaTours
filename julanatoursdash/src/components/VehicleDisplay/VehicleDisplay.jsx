@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext';
 import VehicleItem from '../VehicleItem/VehicleItem';
 
-export const VehicleDisply = () => {
+export const VehicleDisplay = () => {
     const {vehicleList} = useContext(StoreContext);
   return (
     <div className="container">
@@ -27,4 +27,4 @@ export const VehicleDisply = () => {
   )
 }
 
-export default VehicleDisply;
+export default VehicleDisplay;
