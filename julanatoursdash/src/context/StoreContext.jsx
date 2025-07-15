@@ -25,7 +25,7 @@ export const StoreContextProvider = (props) => {
         }
         )
     }
-
+ 
     const contextValue ={
         vehicleList,
         increaseQty,

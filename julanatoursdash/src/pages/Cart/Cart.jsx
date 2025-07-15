@@ -3,7 +3,7 @@ import { StoreContext }  from '../../context/StoreContext';
 import './Cart.css';
 
 const Cart = () => {
-    const {vehicleList, increaseQty, decreaseQty, quantities } = useContext(StoreContext);
+    const {vehicleList, increaseQty, decreaseQty, quantities, removeFromCart } = useContext(StoreContext);
     //cart items
     const cartItems = vehicleList.filter(food => quantities[vehicleList.id] > 0)
     //calculation
@@ -64,7 +64,7 @@ const Cart = () => {
                         </div>
                         <div className="col-md-2 text-end">
                             <p className="fw-bold">&#8377:{(vehicle.price = quantities[vehicle.id]).toFixed(2)}</p>
-                            <button className="btn btn-sm btn-outline-danger">
+                            <button className="btn btn-sm btn-outline-danger" onClick={() => removeFromCart[vehicle.id]}>
                                     <i className="bi bi-trash"></i>
                             </button>
                         </div>
