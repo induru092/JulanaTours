@@ -1,5 +1,5 @@
 .explore-menu-list::-webkit-scrollbar {
- display: none
+ display: none;
 }
 
 .explore-menu-list{
@@ -26,7 +26,7 @@
     margin-left: 10px;
     color: #747474;
     transition: color 0.2s;
-}
+}+
 
 .scroll-icon:hover {
     color: tomato;
