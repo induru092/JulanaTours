@@ -10,6 +10,8 @@ export const Menubar = () => {
   const [active, setActive] = useSte("home");
   const {quantities} = useContext[StoreContext];
   const uniqueItemsInCart = Object.values(quantities).filter(qty => qty > 0).length;
+
+  const navigate = useNavigate();
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container">
@@ -44,8 +46,8 @@ export const Menubar = () => {
             </span>
         </div>
         </Link>
-        <button className='btn btn-outline-primary'>Login</button>
-        <button className='btn btn-outline-success'>Register</button>
+        <button className='btn btn-outline-primary' onClick={() => navigate('/login')}>Login</button>
+        <button className='btn btn-outline-success' onClick={() => navigate('/register')}>Register</button>
       </div>
     </div>
   </div>
