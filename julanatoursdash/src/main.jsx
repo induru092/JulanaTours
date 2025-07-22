@@ -16,4 +16,4 @@ import { StoreContextProvider } from './context/StoreContext.jsx';
       </StoreContextProvider>
    </BrowserRouter>
   
-)
+);
