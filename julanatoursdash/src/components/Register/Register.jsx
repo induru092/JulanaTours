@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./Register.css";
 
 const Register = () => {
+    const [data,setData] = useState({
+        name: '',
+        email: '',
+        password: ''
+    });
+
+    const onChangeHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target 
+    }
   return (
     <div className="register-container">
     <div className="row">

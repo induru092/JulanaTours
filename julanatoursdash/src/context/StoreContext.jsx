@@ -8,6 +8,7 @@ export const StoreContextProvider = (props) => {
 
     const [vehicleList, setVehicleList] = useState([]);
     const [quantities, setQuantities] = useState({});
+    const [token,setToken] = useState("");
 
     const increaseQty = (vehicleId) => {
         setQuantities((prew) => ({...prev , [vehicleId]: (prev[vehicleId] || 0)+1}));
@@ -31,7 +32,9 @@ export const StoreContextProvider = (props) => {
         increaseQty,
         decreaseQty,
         quantities,
-        removeFromCart
+        removeFromCart,
+        token,
+        setToken,
     };
 
     useEffect(() => {
