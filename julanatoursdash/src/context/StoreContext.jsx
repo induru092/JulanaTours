@@ -1,31 +1,50 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { fetchVehiclesList } from "../service/vehicleService";
 
-export const StoreContent = createContext(null);
+export const StoreContext = createContext(null);
 
 export const StoreContextProvider = (props) => {
-    const {vehicleList, setVehicleList} = useState([]);
 
-    const fetchVehicleList = async () => {
-        const response = await axios.get('http://localhost:8080/api/vehicles');
-        setVehicleList(response.data);
-        console.log(response.data);
+    const [vehicleList, setVehicleList] = useState([]);
+    const [quantities, setQuantities] = useState({});
+
+    const increaseQty = (vehicleId) => {
+        setQuantities((prew) => ({...prev , [vehicleId]: (prev[vehicleId] || 0)+1}));
     }
 
-    const contextValue = {
-            vehicleList
+    const decreaseQty = (vehicleId) => {
+        setQuantities((prew) => ({...prev , [vehicleId]: prev[vehicleId] > 0 ? prev[vehicleId] - 1 : 0}));
+    }
+
+    const removeFromCart = (vehicleId) => {
+        setQuantities((prevQuantities) => {
+            const updatedQuantities = {...prevQuantities};
+            delete updatedQuantities[vehicleId];
+            return updatedQuantities;
+        }
+        )
+    }
+ 
+    const contextValue ={
+        vehicleList,
+        increaseQty,
+        decreaseQty,
+        quantities,
+        removeFromCart
     };
 
     useEffect(() => {
-            async function useLoaderData() {
-               await fetchVehicleList();
-
-            }
-            useLoaderData();
+        async function loadData() {
+           const data = await fetchVehiclesList();
+           setVehicleList(data);
+        }
+        loadData();
     }, []);
-    return(
-        <StoreContext.provider value={contextValue}>
+
+    return (
+        <StoreContext.Provider value={contextValue}>
             {props.children}
-        </StoreContext.provider>
+        </StoreContext.Provider>
     )
 }
