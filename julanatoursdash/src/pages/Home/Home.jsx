@@ -1,16 +1,17 @@
-import React from 'react';
-import Header from '../../components/Header/Header';
-import ExploreMenu from '../../components/ExploreMenu/ExploreMenu';
-import VehicleDisplay from '../../components/VehicleDisplay/VehicleDisplay';
+import React, { useState } from 'react';
+import { Header } from '../../components/Header/Header.jsx';
+import ExploreMenu from '../../components/ExploreMenu/ExploreMenu.jsx';
+import VehicleDisply from '../../components/VehicleDisplay/VehicleDisply.jsx';
 
-const Home = () => {
+export const Home = () => {
+  const [category, setCategory] = useState('All');
   return (
     <main className='container'>
-      <Header/>
-      <ExploreMenu/>
-      <VehicleDisplay />
+      <Header />
+      <ExploreMenu category={category} setCategory={setCategory}/>
+      <VehicleDisply category={category} searchText={''}/>
     </main>
   )
 }
 
-export default Home;
+export default Home; 
