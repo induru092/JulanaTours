@@ -8,6 +8,9 @@ import VehicleDetails from './pages/VehicleDetails/VehicleDetails.jsx';
 import ExploreMenu from './components/ExploreMenu/ExploreMenu.jsx';
 import Cart  from './pages/Cart/Cart.jsx';
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder.jsx';
+import Login from './components/Login/Login.jsx';
+import Register from './components/Register/Register.jsx';
+
 
 const App = () => {
   return (
@@ -20,6 +23,8 @@ const App = () => {
         <Route path='/vehicle/:id' element={<VehicleDetails />}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/order' element={<PlaceOrder/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
       </Routes>
     </div>
   )
