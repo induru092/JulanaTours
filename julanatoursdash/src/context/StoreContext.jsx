@@ -7,9 +7,21 @@ export const StoreContext = createContext(null);
 export const StoreContextProvider = (props) => {
 
     const [vehicleList, setVehicleList] = useState([]);
+    const [quantities, setQuantities] = useState({});
+
+    const increaseQty = (vehicleId) => {
+        setQuantities((prev) => ({...prev, [vehicleId]: (prev[vehicleId] || 0) + 1 }));
+    }
+
+    const decreaseQty = (vehicleId ) => {
+        setQuantities((prev) => ({...prev, [vehicleId]: prev[vehicleId] > 0 ? prev[vehicleId] - 1 : 0 }));
+    }
 
     const contextValue ={
-        vehicleList
+        vehicleList,
+        increaseQty,
+        decreaseQty,
+        quantities
     };
 
     useEffect(() => {

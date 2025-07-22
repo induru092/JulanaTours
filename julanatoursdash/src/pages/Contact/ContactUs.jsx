@@ -45,7 +45,7 @@ export const ContactUs = () => {
                       </div>
                     </div>
 
-                    <div className="social-links">
+                    {/* <div className="social-links">
                       <h6 className="mb-3">Follow Us</h6>
                       <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-icon">
                         <i className="fab fa-facebook-f"></i>
@@ -59,14 +59,14 @@ export const ContactUs = () => {
                       <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-icon">
                         <i className="fab fa-instagram"></i>
                       </a>
-                    </div>
-                    {/* <div className="social-links">
+                    </div> */}
+                    <div className="social-links">
                       <h6 className="mb-3">Follow Us</h6>
                       <a href="https://facebook.com/yourpage" className="social-icon"><i className="fab fa-facebook-f"></i></a>
                       <a href="https://twitter.com/yourhandle" className="social-icon"><i className="fab fa-twitter"></i></a>
                       <a href="https://linkedin.com/in/yourprofile" className="social-icon"><i className="fab fa-linkedin-in"></i></a>
                       <a href="https://instagram.com/yourprofile" className="social-icon"><i className="fab fa-instagram"></i></a>
-                    </div> */}
+                    </div>
                   </div>
                 </div>
                 

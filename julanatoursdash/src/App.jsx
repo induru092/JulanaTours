@@ -6,6 +6,7 @@ import ContactUs from './pages/Contact/ContactUs.jsx';
 import ExploreVehicle from './pages/ExploreVehicle/ExploreVehicle.jsx';
 import VehicleDetails from './pages/VehicleDetails/VehicleDetails.jsx';
 import ExploreMenu from './components/ExploreMenu/ExploreMenu.jsx';
+import BookingVehicle from './pages/BookingVehicle/BookingVehicle.jsx';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path='/explore' element={<ExploreVehicle />}/>
         {/* <Route path='/vehicle/:id' element={<VehicleDetails />}/> */}
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
+        <Route path='/booking-vehicle' element={<BookingVehicle />}/>
       </Routes>
     </div>
   )
