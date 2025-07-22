@@ -6,7 +6,7 @@
     }
 
     .contact-info {
-      background: linear-gradient(135deg, #0062cc, #0096ff);
+      background: linear-gradient(135deg, #025624, rgb(5, 134, 39));
       padding: 40px;
       color: white;
     }
@@ -67,7 +67,7 @@
     }
 
     .form-control:focus {
-      border-color: #0062cc;
+      border-color: #006400;
       box-shadow: none;
     }
 
@@ -77,7 +77,7 @@
     }
 
     .btn-submit {
-      background: linear-gradient(135deg, #0062cc, #0096ff);
+      background: linear-gradient(135deg, #036826, #036f2c);
       border: none;
       padding: 12px 30px;
       border-radius: 10px;
@@ -86,12 +86,13 @@
 
     .btn-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,98,204,0.3);
+      box-shadow: 0 5px 15px rgba(0, 204, 20, 0.363);
     }
 
     .map-container {
-      height: 200px;
+      height: 400px;
       border-radius: 10px;
       overflow: hidden;
       margin-top: 20px;
     }
+
