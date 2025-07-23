@@ -88,14 +88,17 @@
 
 // export default Menubar;
 
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './Menubar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { assets } from '../../assets/assests.js';
 import { Link } from 'react-router-dom';
+import { StoreContext } from '../../context/StoreContext.jsx';
 
 export const Menubar = () => {
-  
+  const [active, setActive] = useState("home")
+  const {quantities} = useContext(StoreContext);
+  const uniqueItemInBookingVehicle = Object.values(quantities).filter(qty => qty > 0).length; 
   return (
     <nav className="navbar navbar-expand-custom navbar-mainbg sticky-top">
       <Link to="/"><img src={assets.logo} alt="" className='mx-2' height={48} width={48}/></Link>
@@ -115,20 +118,20 @@ export const Menubar = () => {
             <div className="right"></div>
           </div>
           <li className="nav-item">
-            <Link className="nav-link" to="/">Home</Link>
+            <Link className={active === "home" ? "nav-link fw-bold active": "nav-link"} to="/" onClick={() => setActive('home')}>Home</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/explore">Explore</Link>
+            <Link className={active === "explore" ? "nav-link fw-bold active": "nav-link"} to="/explore" onClick={() => setActive('explore')}>Explore</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/contact">Contact Us</Link>
+            <Link className={active === "contact-us" ? "nav-link fw-bold active": "nav-link"} to="/contact" onClick={() => setActive('contact-us')}>Contact Us</Link>
           </li>
         </ul>
         <div className="ms-auto d-flex align-items-center gap-3">
           <Link to={`/booking-vehicle`}>
             <div className="position-relative">
               <img src={assets.cart} alt="" height={32} width={32} className="position-relative"/>
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5</span>
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">{uniqueItemInBookingVehicle}</span>
             </div>
           </Link>
           <button className="btn btn-outline-primary">Login</button>

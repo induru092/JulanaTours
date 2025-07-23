@@ -89,6 +89,11 @@ export const ContactUs = () => {
                         <label className="form-label">Email</label>
                         <input type="email" className="form-control" placeholder="@example.com" />
                       </div>
+
+                      <div className="mb-3">
+                        <label className="form-label">Contact Number</label>
+                        <input type="phoneNo" className="form-control" placeholder="+xx - xxxxxxx" />
+                      </div>
                       
                       <div className="mb-3">
                         <label className="form-label">Subject</label>
