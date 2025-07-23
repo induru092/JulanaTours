@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import "./Register.css";
+import { registerUser } from '../../context/authService';
 
 const Register = () => {
+    const navigate = useNavigate();
     const [data,setData] = useState({
         name: '',
         email: '',
@@ -17,9 +19,10 @@ const Register = () => {
     const onSubmitHandler = async (event) => {
       event.priventDefault();
       try{
-        const response = await axios.post('http://localhost:8080/api/register', data);
+        const response = await registerUser(data);
         if (response.status === 201){
           toast.success("Registation completed. Please login.");
+          navigate('/login');
         }else { 
           toast.error("Unable to register.Please try agin");
         }
