@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import "./Login.css";
+import { Link} from "react-router-dom";
+import { login} from "../../service/authService";
+import {StoreContext} from "../../context/StoreContext";
 
 const Login = () => {
+  const {setToken} = useContext(StoreContext);
+  const navigate = useNavigate();
   const [data, setData] = useState({
     emil: '',
     password: ''
@@ -13,8 +18,21 @@ const Login = () => {
     setData(data => ({...data, [name]: value}));
   }
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
+    try{
+      const response = await login(data);
+      if(response.status === 200){
+        setToken(response.data.token);
+        localStorage.setItem('token',response.data.token);
+        navigate('/');
+      }else{
+        toast.error('Unable to login,plese try again.');
+      }
+    }catch(error){
+        console.log("Unable to login",error);
+        toast.error("Unable to login.Please try again");
+    }
   };
   
   return (
