@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { VehicleDisplay } from '../../components/VehicleDisplay/VehicleDisplay';
+import Footer from '../../components/Footer/Footer';
 
 export const ExploreVehicle = () => {
   const [category, setCategory] = useState('All');
@@ -7,6 +8,7 @@ export const ExploreVehicle = () => {
   return (
     
    <> 
+  
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-6">
@@ -30,6 +32,9 @@ export const ExploreVehicle = () => {
     </div>
   
     <VehicleDisplay category={category} searchText={searchText}/>
+
+    <Footer />
+
     </>
   
   )

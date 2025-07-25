@@ -7,6 +7,7 @@ import ExploreVehicle from './pages/ExploreVehicle/ExploreVehicle.jsx';
 import VehicleDetails from './pages/VehicleDetails/VehicleDetails.jsx';
 import ExploreMenu from './components/ExploreMenu/ExploreMenu.jsx';
 import BookingVehicle from './pages/BookingVehicle/BookingVehicle.jsx';
+import Footer from './components/Footer/Footer.jsx';
 import PlaceBooking from './pages/PlaceBooking/PlaceBooking.jsx';
 
 const App = () => {
@@ -20,7 +21,9 @@ const App = () => {
         {/* <Route path='/vehicle/:id' element={<VehicleDetails />}/> */}
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
         <Route path='/booking-vehicle' element={<BookingVehicle />}/>
-        <Route path='/place-booking' element={<PlaceBooking />}/>
+        <Route path='/footer' element={<Footer />}/>
+        <Route path='/explore-menu' element={<ExploreMenu />}/>
+        <Route path='/placebooking' element={<PlaceBooking />} />
       </Routes>
     </div>
   )
