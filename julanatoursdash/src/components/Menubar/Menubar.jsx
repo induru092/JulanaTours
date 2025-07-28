@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext ,useState} from 'react';
 import './Menubar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -8,8 +8,14 @@ import { StoreContext } from '../../context/StoreContext.jsx';
 
 export const Menubar = () => {
   const [active, setActive] = useSte("home");
-  const {quantities} = useContext[StoreContext];
+  const {quantities, token, setToken, setQuantities} = useContext(StoreContext);
   const uniqueItemsInCart = Object.values(quantities).filter(qty => qty > 0).length;
+  const logout = () => {
+    localStorage,removeItem('token');
+    setToken="";
+    setQuantities({});
+    navigate("/");
+  };
 
   const navigate = useNavigate();
   return (
@@ -44,12 +50,29 @@ export const Menubar = () => {
             <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning'>
               {uniqueItemsInCart}
             </span>
-        </div>
+            </div>
         </Link>
-        <button className='btn btn-outline-primary' onClick={() => navigate('/login')}>Login</button>
-        <button className='btn btn-outline-success' onClick={() => navigate('/register')}>Register</button>
+          (
+            !token ?
+            <>
+              <button className='btn btn-outline-primary' onClick={() => navigate('/login')}>Login</button>
+              <button className='btn btn-outline-success' onClick={() => navigate('/register')}>Register</button>
+            </> 
+          ):( <div className='dropdown text-end'>
+                    <a href='#' className="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    >
+                    <img src={assets.profile} alt='' width={32} height={32} className='rounded-circle'/>
+                    </a>
+                  <ul className='dropdown-menu text-small'>
+                    <li className='dropdown-item' onClick={() => navigate('/myorders')}>Orders</li>
+                    <li className='dropdown-item' onClick={() => navigate(logout)}>Logout</li>
+                  </ul>        
+          )
       </div>
     </div>
+  </div>
   </div>
 </nav>
   )

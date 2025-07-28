@@ -7,10 +7,12 @@ import bus1 from './bus1.png';
 import bus2 from './bus2.png';
 import car from './car.png';
 import van from './van.png';
+import profile from './profile.png';
 
 export const assets = {
     logo,
-    cart
+    cart,
+    profile
 }
 
 export const categories = [
