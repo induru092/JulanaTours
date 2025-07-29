@@ -343,17 +343,6 @@ import { assets } from '../../assets/assets';
     const tax = subtotal * 0.1;
     const total = subtotal + pickup + tax;
 
-  // const mockBookingItems = [
-  //   { id: 1, name: "Toyota Camry", price: 45, days: 3 },
-  //   { id: 2, name: "Honda Accord", price: 50, days: 2 }
-  // ];
-  
-  // const mockTotals = {
-  //   subtotal: 235,
-  //   pickup: 15,
-  //   tax: 25,
-  //   total: 275
-  // };
 
   const [formData, setFormData] = useState({
     firstName: 'First',
@@ -841,11 +830,11 @@ import { assets } from '../../assets/assets';
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Pickup fee</span>
-                    <span className="text-gray-900">Rs.{pickup.toFixed(2)}</span>
+                    <span className="text-gray-900">Rs.{pickup.toFixed}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Tax</span>
-                    <span className="text-gray-900">Rs.{tax.toFixed(2)}</span>
+                    <span className="text-gray-900">Rs.{tax.toFixed}</span>
                   </div>
                   <div className="border-t border-gray-200 pt-2 mt-2">
                     <div className="flex justify-between">
