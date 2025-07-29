@@ -1,5 +1,5 @@
 import React from 'react';
-import { categories } from '../../assets/assests.js';
+import { categories } from '../../assets/assets.js';
 import './ExploreMenu.css';
 
 export const ExploreMenu = ({category , setCategory}) => {

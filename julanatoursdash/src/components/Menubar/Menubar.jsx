@@ -91,7 +91,7 @@
 import React, { useContext, useState } from 'react';
 import './Menubar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { assets } from '../../assets/assests.js';
+import { assets } from '../../assets/assets.js';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext.jsx';
 
