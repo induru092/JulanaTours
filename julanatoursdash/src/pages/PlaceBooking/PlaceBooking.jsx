@@ -3,6 +3,9 @@ import './PlaceBooking.css';
 import { StoreContext } from '../../context/StoreContext';
 import { calculateCartTotals } from '../../BookingUtil/BookingUtil';
 import Footer from '../../components/Footer/Footer';
+import { Link } from 'react-router-dom';
+import { assets } from '../../assets/assets';
+
 
 // export const PlaceBooking = () => {
 
@@ -330,19 +333,27 @@ import Footer from '../../components/Footer/Footer';
 
     const BookingItems = vehicleList.filter((vehicle) => quantities[vehicle.id] > 0)
     
-    const {subtotal, pickup, tax, total} = calculateCartTotals(BookingItems, quantities);
+    // const {subtotal, pickup, tax, total} = calculateCartTotals(BookingItems, quantities);
   // Mock data to replace context dependencies
-  const mockBookingItems = [
-    { id: 1, name: "Toyota Camry", price: 45, days: 3 },
-    { id: 2, name: "Honda Accord", price: 50, days: 2 }
-  ];
+
+  const bookingItems = vehicleList.filter(vehicle => quantities[vehicle.id] > 0);
+
+    const subtotal = bookingItems.reduce((acc, vehicle) => acc + (vehicle.price * quantities[vehicle.id]), 0);
+    const pickup = subtotal === 0 ? 0.0 : 10;
+    const tax = subtotal * 0.1;
+    const total = subtotal + pickup + tax;
+
+  // const mockBookingItems = [
+  //   { id: 1, name: "Toyota Camry", price: 45, days: 3 },
+  //   { id: 2, name: "Honda Accord", price: 50, days: 2 }
+  // ];
   
-  const mockTotals = {
-    subtotal: 235,
-    pickup: 15,
-    tax: 25,
-    total: 275
-  };
+  // const mockTotals = {
+  //   subtotal: 235,
+  //   pickup: 15,
+  //   tax: 25,
+  //   total: 275
+  // };
 
   const [formData, setFormData] = useState({
     firstName: 'First',
@@ -350,6 +361,7 @@ import Footer from '../../components/Footer/Footer';
     username: '',
     ContactNumber: '+1 234 567 8901',
     email: 'you@example.com',
+    passportno: '',
     pickupdate: '',
     dropdate: '',
     pickuplocation: '',
@@ -388,6 +400,7 @@ import Footer from '../../components/Footer/Footer';
     <>
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <img src={assets.logo} alt="Logo" width={120} height={120} className="mx-auto d-block mb-4" />
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Complete Your Booking</h1>
@@ -462,6 +475,19 @@ import Footer from '../../components/Footer/Footer';
                     id="email"
                     name="email"
                     value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="passportno" className="block text-sm font-medium text-gray-700 mb-1">
+                    Passport Number
+                  </label>
+                  <input
+                    type="text"
+                    id="passportno"
+                    name="passportno"
+                    value={formData.passportno}
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                   />
@@ -792,15 +818,16 @@ import Footer from '../../components/Footer/Footer';
               <h3 className="text-xl font-semibold text-gray-900 mb-6">Booking Summary</h3>
               
               <div className="space-y-4 mb-6">
-                {mockBookingItems.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                {bookingItems.map((vehicle) => (
+                  <div key={vehicle.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex-1">
-                      <h4 className="font-medium text-gray-900">{item.name}</h4>
-                      <p className="text-sm text-gray-600">{item.days} days rental</p>
+                      <h4 className="font-medium text-gray-900">{vehicle.name}</h4>
+                      <small className="text-gray-600">Quantity: {quantities[vehicle.id]}</small>
+                      {/* <p className="text-sm text-gray-600">{item.days} days rental</p> */}
                     </div>
                     <div className="text-right">
-                      <p className="font-medium text-gray-900">${item.price * item.days}</p>
-                      <p className="text-sm text-gray-600">${item.price}/day</p>
+                      <p className="font-medium text-gray-900">Rs.{vehicle.price * quantities[vehicle.id]}</p>
+                      {/* <p className="text-sm text-gray-600">${vehicle.price}/day</p> */}
                     </div>
                   </div>
                 ))}
@@ -810,20 +837,20 @@ import Footer from '../../components/Footer/Footer';
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="text-gray-900">${mockTotals.subtotal}</span>
+                    <span className="text-gray-900">Rs.{subtotal === 0 ? 0.0 : pickup.toFixed()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Pickup fee</span>
-                    <span className="text-gray-900">${mockTotals.pickup}</span>
+                    <span className="text-gray-900">${pickup.toFixed}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Tax</span>
-                    <span className="text-gray-900">${mockTotals.tax}</span>
+                    <span className="text-gray-900">${tax.toFixed}</span>
                   </div>
                   <div className="border-t border-gray-200 pt-2 mt-2">
                     <div className="flex justify-between">
                       <span className="text-lg font-semibold text-gray-900">Total</span>
-                      <span className="text-lg font-semibold text-gray-900">${mockTotals.total}</span>
+                      <span className="text-lg font-semibold text-gray-900">${total.toFixed()}</span>
                     </div>
                   </div>
                 </div>
