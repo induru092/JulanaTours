@@ -9,6 +9,8 @@ import ExploreMenu from './components/ExploreMenu/ExploreMenu.jsx';
 import BookingVehicle from './pages/BookingVehicle/BookingVehicle.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import PlaceBooking from './pages/PlaceBooking/PlaceBooking.jsx';
+import Login from './components/Login/Login.jsx';
+import Register from './components/Register/Register.jsx';
 
 const App = () => {
   return (
@@ -24,6 +26,9 @@ const App = () => {
         <Route path='/footer' element={<Footer />}/>
         <Route path='/explore-menu' element={<ExploreMenu />}/>
         <Route path='/placebooking' element={<PlaceBooking />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+    
       </Routes>
     </div>
   )

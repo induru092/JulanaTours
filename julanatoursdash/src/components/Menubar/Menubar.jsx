@@ -147,8 +147,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './Menubar.css';
 import { assets } from '../../assets/assets.js';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext.jsx';
+import Login from '../Login/Login.jsx';
 
 export const Menubar = () => {
   const [active, setActive] = useState("home");
@@ -180,6 +181,8 @@ export const Menubar = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const navigate = useNavigate();
 
   return (
     <nav className={`modern-navbar ${isScrolled ? 'scrolled' : ''}`}>
@@ -236,14 +239,16 @@ export const Menubar = () => {
 
           {/* Auth Buttons */}
           <div className="auth-buttons">
-            <button className="btn-login">
+            <button className="btn-login" onClick={()=> 
+              navigate('/login')}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
               </svg>
               Login
             </button>
-            <button className="btn-register">
+            <button className="btn-register" onClick={()=> 
+              navigate('/register')}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
@@ -304,14 +309,14 @@ export const Menubar = () => {
           </Link>
           
           <div className="mobile-auth-section">
-            <button className="mobile-btn-login">
+            <button className="mobile-btn-login" >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
               </svg>
               Login
             </button>
-            <button className="mobile-btn-register">
+            <button className="mobile-btn-register" >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>

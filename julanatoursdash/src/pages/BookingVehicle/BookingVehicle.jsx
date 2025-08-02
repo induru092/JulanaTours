@@ -179,7 +179,7 @@ export const BookingVehicle = () => {
             <div className="booking-header">
                 <div className="header-content">
                     <h1 className="booking-title">
-                        <span className="title-icon">🚗</span>
+                        
                         Your Vehicle Booking
                     </h1>
                     <p className="booking-subtitle">Review and manage your selected vehicles</p>

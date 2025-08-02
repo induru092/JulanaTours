@@ -22,6 +22,7 @@ import './Header.css';
 
 export const Header = () => {
   return (
+    <main className="header-container">
     <div className="hero-section">
       <div className="hero-background">
         <div className="hero-overlay"></div>
@@ -91,7 +92,9 @@ export const Header = () => {
         </div>
       </div>
     </div>
+    </main>
   );
 };
 
 export default Header;
+
