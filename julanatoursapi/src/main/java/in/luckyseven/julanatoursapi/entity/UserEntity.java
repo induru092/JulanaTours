@@ -1,4 +1,4 @@
 package in.luckyseven.julanatoursapi.entity;
 
-public class VehicleEntity {
+public class UserEntity {
 }
