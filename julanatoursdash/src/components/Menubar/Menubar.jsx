@@ -1,85 +1,134 @@
-// import React, { useState, useEffect, useRef } from 'react';
+// import React, { useContext, useState } from 'react';
+// import { Link } from 'react-router-dom';
+// import { assets } from '../../assets/assets.js';
+// import { StoreContext } from "../../context/StoreContext";
+// import { useAuth } from "../../context/AuthContext";
 // import './Menubar.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import { assets } from '../../assets/assests.js';
-// import { Link, useLocation } from 'react-router-dom';
 
-// export const Menubar = () => {
-//   const location = useLocation();
-//   const [activeItem, setActiveItem] = useState('/');
-//   const selectorRef = useRef(null);
-//   const navItemsRef = useRef([]);
+// const Menubar = () => {
+//   const [showMenu, setShowMenu] = useState(false);
+//   const { quantities } = useContext(StoreContext);
+//   const { user, logout } = useAuth();
 
-//   useEffect(() => {
-//     setActiveItem(location.pathname);
-//     updateSelectorPosition();
-//   }, [location]);
+//   // Calculate total items in cart
+//   const totalCartItems = Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
 
-//   useEffect(() => {
-//     window.addEventListener('resize', updateSelectorPosition);
-//     return () => window.removeEventListener('resize', updateSelectorPosition);
-//   }, []);
-
-//   const updateSelectorPosition = () => {
-//     const activeIndex = ['/', '/explore', '/contact'].indexOf(activeItem);
-//     if (activeIndex >= 0 && navItemsRef.current[activeIndex] && selectorRef.current) {
-//       const activeElement = navItemsRef.current[activeIndex];
-//       const { offsetLeft, offsetWidth } = activeElement;
-      
-//       selectorRef.current.style.width = `${offsetWidth}px`;
-//       selectorRef.current.style.left = `${offsetLeft}px`;
-//     }
+//   const handleLogout = () => {
+//     logout();
 //   };
 
 //   return (
-//     <nav className="navbar navbar-expand-custom navbar-mainbg sticky-top">
-//       <Link className="navbar-brand navbar-logo" to="/">Navbar</Link>
-//       <button 
-//         className="navbar-toggler" 
-//         type="button" 
-//         aria-controls="navbarSupportedContent" 
-//         aria-expanded="false" 
-//         aria-label="Toggle navigation"
-//       >
-//         <i className="fas fa-bars text-white"></i>
-//       </button>
-      
-//       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-//         <ul className="navbar-nav position-relative">
-//           <div className="hori-selector" ref={selectorRef}>
-//             <div className="left"></div>
-//             <div className="right"></div>
+//     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+//       <div className="container">
+//         {/* Logo */}
+//         <Link className="navbar-brand d-flex align-items-center" to="/">
+//           <img src={assets.logo} alt="Julana Tours" height="40" className="me-2" />
+//           <span className="fw-bold text-primary">Julana Tours</span>
+//         </Link>
+
+//         {/* Mobile toggle button */}
+//         <button 
+//           className="navbar-toggler" 
+//           type="button" 
+//           onClick={() => setShowMenu(!showMenu)}
+//           aria-controls="navbarNav" 
+//           aria-expanded={showMenu}
+//           aria-label="Toggle navigation"
+//         >
+//           <span className="navbar-toggler-icon"></span>
+//         </button>
+
+//         {/* Navigation items */}
+//         <div className={`collapse navbar-collapse ${showMenu ? 'show' : ''}`} id="navbarNav">
+//           <ul className="navbar-nav mx-auto">
+//             <li className="nav-item">
+//               <Link className="nav-link" to="/">
+//                 <i className="bi bi-house me-1"></i>
+//                 Home
+//               </Link>
+//             </li>
+//             <li className="nav-item">
+//               <Link className="nav-link" to="/explore">
+//                 <i className="bi bi-car-front me-1"></i>
+//                 Explore Vehicles
+//               </Link>
+//             </li>
+//             <li className="nav-item">
+//               <Link className="nav-link" to="/contact">
+//                 <i className="bi bi-telephone me-1"></i>
+//                 Contact
+//               </Link>
+//             </li>
+//           </ul>
+
+//           {/* Right side items */}
+//           <div className="d-flex align-items-center">
+//             {/* Search icon */}
+//             <button className="btn btn-outline-secondary me-2 d-none d-md-block">
+//               <i className="bi bi-search"></i>
+//             </button>
+
+//             {/* Cart */}
+//             <Link to="/booking-vehicle" className="btn btn-outline-primary me-2 position-relative">
+//               <i className="bi bi-cart"></i>
+//               {totalCartItems > 0 && (
+//                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+//                   {totalCartItems}
+//                   <span className="visually-hidden">items in cart</span>
+//                 </span>
+//               )}
+//             </Link>
+
+//             {/* User dropdown */}
+//             <div className="dropdown">
+//               <button 
+//                 className="btn btn-outline-dark dropdown-toggle d-flex align-items-center" 
+//                 type="button" 
+//                 id="userDropdown" 
+//                 data-bs-toggle="dropdown" 
+//                 aria-expanded="false"
+//               >
+//                 <i className="bi bi-person-circle me-1"></i>
+//                 <span className="d-none d-md-inline">
+//                   {user?.email?.split('@')[0] || 'User'}
+//                 </span>
+//               </button>
+//               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+//                 <li>
+//                   <span className="dropdown-item-text">
+//                     <strong>Welcome!</strong><br />
+//                     <small className="text-muted">{user?.email}</small>
+//                   </span>
+//                 </li>
+//                 <li><hr className="dropdown-divider" /></li>
+//                 <li>
+//                   <Link className="dropdown-item" to="/profile">
+//                     <i className="bi bi-person me-2"></i>
+//                     Profile
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link className="dropdown-item" to="/booking-vehicle">
+//                     <i className="bi bi-cart me-2"></i>
+//                     My Bookings
+//                   </Link>
+//                 </li>
+//                 <li>
+//                   <Link className="dropdown-item" to="/orders">
+//                     <i className="bi bi-clock-history me-2"></i>
+//                     Order History
+//                   </Link>
+//                 </li>
+//                 <li><hr className="dropdown-divider" /></li>
+//                 <li>
+//                   <button className="dropdown-item text-danger" onClick={handleLogout}>
+//                     <i className="bi bi-box-arrow-right me-2"></i>
+//                     Logout
+//                   </button>
+//                 </li>
+//               </ul>
+//             </div>
 //           </div>
-          
-//           <li 
-//             className={`nav-item ${activeItem === '/' ? 'active' : ''}`}
-//             ref={el => navItemsRef.current[0] = el}
-//           >
-//             <Link className="nav-link" to="/">Home</Link>
-//           </li>
-          
-//           <li 
-//             className={`nav-item ${activeItem === '/explore' ? 'active' : ''}`}
-//             ref={el => navItemsRef.current[1] = el}
-//           >
-//             <Link className="nav-link" to="/explore">Explore</Link>
-//           </li>
-          
-//           <li 
-//             className={`nav-item ${activeItem === '/contact' ? 'active' : ''}`}
-//             ref={el => navItemsRef.current[2] = el}
-//           >
-//             <Link className="nav-link" to="/contact">Contact Us</Link>
-//           </li>
-//         </ul>
-        
-//         <div className="ms-auto d-flex align-items-center gap-3">
-//           <div className="position-relative">
-//             <img src={assets.cart} alt="Cart" height={32} width={32} />
-//             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">5</span>
-//           </div>
-//           <button className="btn btn-outline-primary">Login</button>
-//           <button className="btn btn-outline-success">Register</button>
 //         </div>
 //       </div>
 //     </nav>
@@ -88,254 +137,624 @@
 
 // export default Menubar;
 
-// import React, { useContext, useState } from 'react';
+// import React, { useContext, useState, useEffect } from 'react';
+// import { Link, useLocation } from 'react-router-dom';
+// im
+// import { StoreContext } from "../../context/StoreContext";
+// import { useAuth } from "../../context/AuthContext";
 // import './Menubar.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import { assets } from '../../assets/assets.js';
-// import { Link } from 'react-router-dom';
-// import { StoreContext } from '../../context/StoreContext.jsx';
 
-// export const Menubar = () => {
-//   const [active, setActive] = useState("home")
-//   const {quantities} = useContext(StoreContext);
-//   const uniqueItemInBookingVehicle = Object.values(quantities).filter(qty => qty > 0).length; 
+// const Menubar = () => {
+//   const [showMobileMenu, setShowMobileMenu] = useState(false);
+//   const [isScrolled, setIsScrolled] = useState(false);
+//   const { quantities } = useContext(StoreContext);
+//   const { user, logout } = useAuth();
+//   const location = useLocation();
+
+//   // Calculate total items in cart
+//   const totalCartItems = Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
+
+//   // Handle scroll effect
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       setIsScrolled(window.scrollY > 20);
+//     };
+//     window.addEventListener('scroll', handleScroll);
+//     return () => window.removeEventListener('scroll', handleScroll);
+//   }, []);
+
+//   // Close mobile menu when route changes
+//   useEffect(() => {
+//     setShowMobileMenu(false);
+//   }, [location]);
+
+//   const handleLogout = () => {
+//     logout();
+//   };
+
+//   const toggleMobileMenu = () => {
+//     setShowMobileMenu(!showMobileMenu);
+//   };
+
+//   // Check if nav item is active
+//   const isActiveRoute = (path) => {
+//     return location.pathname === path;
+//   };
+
 //   return (
-//     <nav className="navbar navbar-expand-custom navbar-mainbg sticky-top">
-//       <Link to="/"><img src={assets.logo} alt="" className='mx-2' height={48} width={48}/></Link>
-//       <button 
-//         className="navbar-toggler" 
-//         type="button" 
-//         aria-controls="navbarSupportedContent" 
-//         aria-expanded="false" 
-//         aria-label="Toggle navigation"
-//       >
-//         <i className="fas fa-bars text-white"></i>
-//       </button>
-//       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-//         <ul className="navbar-nav ml-auto">
-//           <div className="hori-selector">
-//             <div className="left"></div>
-//             <div className="right"></div>
-//           </div>
-//           <li className="nav-item">
-//             <Link className={active === "home" ? "nav-link fw-bold active": "nav-link"} to="/" onClick={() => setActive('home')}>Home</Link>
-//           </li>
-//           <li className="nav-item">
-//             <Link className={active === "explore" ? "nav-link fw-bold active": "nav-link"} to="/explore" onClick={() => setActive('explore')}>Explore</Link>
-//           </li>
-//           <li className="nav-item">
-//             <Link className={active === "contact-us" ? "nav-link fw-bold active": "nav-link"} to="/contact" onClick={() => setActive('contact-us')}>Contact Us</Link>
-//           </li>
-//         </ul>
-//         <div className="ms-auto d-flex align-items-center gap-3">
-//           <Link to={`/booking-vehicle`}>
-//             <div className="position-relative">
-//               <img src={assets.cart} alt="" height={32} width={32} className="position-relative"/>
-//               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">{uniqueItemInBookingVehicle}</span>
-//             </div>
+//     <>
+//       <nav className={`modern-navbar ${isScrolled ? 'scrolled' : ''}`}>
+//         <div className="navbar-container">
+//           {/* Logo */}
+//           <Link className="navbar-logo" to="/">
+//             <img src={assets.logo} alt="Julana Tours" />
+//             <span className="logo-text">Julana Tours</span>
 //           </Link>
-//           <button className="btn btn-outline-primary">Login</button>
-//           <button className="btn btn-outline-success">Register</button>
+
+//           {/* Desktop Navigation */}
+//           <div className="navbar-menu">
+//             <Link 
+//               className={`nav-item ${isActiveRoute('/') ? 'active' : ''}`} 
+//               to="/"
+//             >
+//               <i className="bi bi-house nav-icon"></i>
+//               Home
+//             </Link>
+//             <Link 
+//               className={`nav-item ${isActiveRoute('/explore') ? 'active' : ''}`} 
+//               to="/explore"
+//             >
+//               <i className="bi bi-car-front nav-icon"></i>
+//               Explore Vehicles
+//             </Link>
+//             <Link 
+//               className={`nav-item ${isActiveRoute('/contact') ? 'active' : ''}`} 
+//               to="/contact"
+//             >
+//               <i className="bi bi-telephone nav-icon"></i>
+//               Contact
+//             </Link>
+//           </div>
+
+//           {/* Right Side Actions */}
+//           <div className="navbar-actions">
+//             {/* Cart */}
+//             <Link to="/booking-vehicle" className="cart-button">
+//               <div className="cart-icon-wrapper">
+//                 <i className="bi bi-cart"></i>
+//                 {totalCartItems > 0 && (
+//                   <span className="cart-badge">{totalCartItems}</span>
+//                 )}
+//               </div>
+//             </Link>
+
+//             {/* User Info */}
+//             {user && (
+//               <div className="nav-item" style={{ cursor: 'default' }}>
+//                 <i className="bi bi-person-circle nav-icon"></i>
+//                 <span>{user?.email?.split('@')[0] || 'User'}</span>
+//               </div>
+//             )}
+
+//             {/* Logout Button */}
+//             {user && (
+//               <button 
+//                 className="btn-login" 
+//                 onClick={handleLogout}
+//                 style={{ background: 'transparent', border: '2px solid #ff6b6b', color: '#ff6b6b' }}
+//               >
+//                 <i className="bi bi-box-arrow-right"></i>
+//                 Logout
+//               </button>
+//             )}
+
+//             {/* Mobile Menu Toggle */}
+//             <button 
+//               className={`mobile-menu-toggle ${showMobileMenu ? 'open' : ''}`}
+//               onClick={toggleMobileMenu}
+//               aria-label="Toggle menu"
+//             >
+//               <span></span>
+//               <span></span>
+//               <span></span>
+//             </button>
+//           </div>
+//         </div>
+//       </nav>
+
+//       {/* Mobile Menu Overlay */}
+//       {showMobileMenu && (
+//         <div 
+//           className="mobile-menu-overlay"
+//           onClick={() => setShowMobileMenu(false)}
+//         />
+//       )}
+
+//       {/* Mobile Menu */}
+//       <div className={`mobile-menu ${showMobileMenu ? 'open' : ''}`}>
+//         <div className="mobile-menu-content">
+//           <Link 
+//             className={`mobile-nav-item ${isActiveRoute('/') ? 'active' : ''}`} 
+//             to="/"
+//           >
+//             <i className="bi bi-house"></i>
+//             Home
+//           </Link>
+//           <Link 
+//             className={`mobile-nav-item ${isActiveRoute('/explore') ? 'active' : ''}`} 
+//             to="/explore"
+//           >
+//             <i className="bi bi-car-front"></i>
+//             Explore Vehicles
+//           </Link>
+//           <Link 
+//             className={`mobile-nav-item ${isActiveRoute('/contact') ? 'active' : ''}`} 
+//             to="/contact"
+//           >
+//             <i className="bi bi-telephone"></i>
+//             Contact
+//           </Link>
+//           <Link 
+//             className={`mobile-nav-item ${isActiveRoute('/booking-vehicle') ? 'active' : ''}`} 
+//             to="/booking-vehicle"
+//           >
+//             <i className="bi bi-cart"></i>
+//             My Bookings {totalCartItems > 0 && `(${totalCartItems})`}
+//           </Link>
+
+//           {user && (
+//             <div className="mobile-auth-section">
+//               <div className="mobile-nav-item" style={{ cursor: 'default', background: 'rgba(102, 126, 234, 0.1)' }}>
+//                 <i className="bi bi-person-circle"></i>
+//                 {user?.email}
+//               </div>
+//               <button 
+//                 className="mobile-btn-login" 
+//                 onClick={handleLogout}
+//                 style={{ background: 'transparent', border: '2px solid #ff6b6b', color: '#ff6b6b' }}
+//               >
+//                 <i className="bi bi-box-arrow-right"></i>
+//                 Logout
+//               </button>
+//             </div>
+//           )}
 //         </div>
 //       </div>
-//     </nav>
+//     </>
+//   );
+// };
+
+// export default Menubar;
+
+// import React, { useContext, useState, useEffect } from 'react';
+// import { Link, useLocation, useNavigate } from 'react-router-dom';
+// import { StoreContext } from "../../context/StoreContext";
+// import { useAuth } from "../../context/AuthContext";
+// import './Menubar.css';
+
+// const Menubar = () => {
+//   const [showMobileMenu, setShowMobileMenu] = useState(false);
+//   const [isScrolled, setIsScrolled] = useState(false);
+//   const { quantities } = useContext(StoreContext);
+//   const { user, logout } = useAuth();
+//   const location = useLocation();
+//   const navigate = useNavigate();
+
+//   // DEBUG: Let's see what user contains
+//   console.log('USER STATE:', user);
+//   console.log('USER TYPE:', typeof user);
+//   console.log('USER IS NULL:', user === null);
+//   console.log('USER IS UNDEFINED:', user === undefined);
+
+//   // Calculate total items in cart
+//   const totalCartItems = Object.values(quantities || {}).reduce((sum, qty) => sum + qty, 0);
+
+//   // Handle scroll effect
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       setIsScrolled(window.scrollY > 20);
+//     };
+//     window.addEventListener('scroll', handleScroll);
+//     return () => window.removeEventListener('scroll', handleScroll);
+//   }, []);
+
+//   // Close mobile menu when route changes
+//   useEffect(() => {
+//     setShowMobileMenu(false);
+//   }, [location]);
+
+//   const handleLogout = () => {
+//     logout();
+//     navigate('/');
+//     setShowMobileMenu(false);
+//   };
+
+//   const toggleMobileMenu = () => {
+//     setShowMobileMenu(!showMobileMenu);
+//   };
+
+//   const isActiveRoute = (path) => {
+//     return location.pathname === path;
+//   };
+
+//   // Temporary placeholder logo
+//   const logoSrc = '/logo.png'; // Try this first
+//   // If that doesn't work, use: 'https://via.placeholder.com/40x40/667eea/white?text=JT'
+
+//   return (
+//     <>
+//       <nav className={`modern-navbar ${isScrolled ? 'scrolled' : ''}`}>
+//         <div className="navbar-container">
+//           {/* Logo with placeholder */}
+//           <Link className="navbar-logo" to="/">
+//             <img 
+//               src={logoSrc} 
+//               alt="Julana Tours" 
+//               onError={(e) => {
+//                 console.log('Logo failed to load:', logoSrc);
+//                 e.target.src = 'https://via.placeholder.com/40x40/667eea/white?text=JT';
+//               }}
+//             />
+//             <span className="logo-text">Julana Tours</span>
+//           </Link>
+
+//           {/* Desktop Navigation */}
+//           <div className="navbar-menu">
+//             <Link 
+//               className={`nav-item ${isActiveRoute('/') ? 'active' : ''}`} 
+//               to="/"
+//             >
+//               <i className="bi bi-house nav-icon"></i>
+//               Home
+//             </Link>
+//             <Link 
+//               className={`nav-item ${isActiveRoute('/explore') ? 'active' : ''}`} 
+//               to="/explore"
+//             >
+//               <i className="bi bi-car-front nav-icon"></i>
+//               Explore Vehicles
+//             </Link>
+//             <Link 
+//               className={`nav-item ${isActiveRoute('/contact') ? 'active' : ''}`} 
+//               to="/contact"
+//             >
+//               <i className="bi bi-telephone nav-icon"></i>
+//               Contact
+//             </Link>
+//           </div>
+
+//           {/* Right Side Actions */}
+//           <div className="navbar-actions">
+//             {/* DEBUG: Show what we're rendering */}
+//             <div style={{color: 'red', fontSize: '12px'}}>
+//               DEBUG: {user ? 'LOGGED IN' : 'NOT LOGGED IN'}
+//             </div>
+
+//             {/* Cart - only show when logged in */}
+//             {user && (
+//               <Link to="/booking-vehicle" className="cart-button">
+//                 <div className="cart-icon-wrapper">
+//                   <i className="bi bi-cart"></i>
+//                   {totalCartItems > 0 && (
+//                     <span className="cart-badge">{totalCartItems}</span>
+//                   )}
+//                 </div>
+//               </Link>
+//             )}
+
+//             {/* ALWAYS SHOW LOGIN/REGISTER FOR TESTING */}
+//             <div className="auth-buttons">
+//               <Link to="/login" className="btn-login">
+//                 <i className="bi bi-box-arrow-in-right"></i>
+//                 Login
+//               </Link>
+//               <Link to="/register" className="btn-register">
+//                 <i className="bi bi-person-plus"></i>
+//                 Register
+//               </Link>
+//             </div>
+
+//             {/* User info when logged in */}
+//             {user && (
+//               <>
+//                 <div className="nav-item" style={{ cursor: 'default' }}>
+//                   <i className="bi bi-person-circle nav-icon"></i>
+//                   <span>{user?.email?.split('@')[0] || 'User'}</span>
+//                 </div>
+//                 <button 
+//                   className="btn-login" 
+//                   onClick={handleLogout}
+//                   style={{ background: 'transparent', border: '2px solid #ff6b6b', color: '#ff6b6b' }}
+//                 >
+//                   <i className="bi bi-box-arrow-right"></i>
+//                   Logout
+//                 </button>
+//               </>
+//             )}
+
+//             {/* Mobile Menu Toggle */}
+//             <button 
+//               className={`mobile-menu-toggle ${showMobileMenu ? 'open' : ''}`}
+//               onClick={toggleMobileMenu}
+//               aria-label="Toggle menu"
+//             >
+//               <span></span>
+//               <span></span>
+//               <span></span>
+//             </button>
+//           </div>
+//         </div>
+//       </nav>
+
+//       {/* Mobile Menu Overlay */}
+//       {showMobileMenu && (
+//         <div 
+//           className="mobile-menu-overlay"
+//           onClick={() => setShowMobileMenu(false)}
+//         />
+//       )}
+
+//       {/* Mobile Menu */}
+//       <div className={`mobile-menu ${showMobileMenu ? 'open' : ''}`}>
+//         <div className="mobile-menu-content">
+//           <Link 
+//             className={`mobile-nav-item ${isActiveRoute('/') ? 'active' : ''}`} 
+//             to="/"
+//           >
+//             <i className="bi bi-house"></i>
+//             Home
+//           </Link>
+//           <Link 
+//             className={`mobile-nav-item ${isActiveRoute('/explore') ? 'active' : ''}`} 
+//             to="/explore"
+//           >
+//             <i className="bi bi-car-front"></i>
+//             Explore Vehicles
+//           </Link>
+//           <Link 
+//             className={`mobile-nav-item ${isActiveRoute('/contact') ? 'active' : ''}`} 
+//             to="/contact"
+//           >
+//             <i className="bi bi-telephone"></i>
+//             Contact
+//           </Link>
+          
+//           {/* Always show login/register in mobile for testing */}
+//           <div className="mobile-auth-section">
+//             <Link to="/login" className="mobile-btn-login">
+//               <i className="bi bi-box-arrow-in-right"></i>
+//               Login
+//             </Link>
+//             <Link to="/register" className="mobile-btn-register">
+//               <i className="bi bi-person-plus"></i>
+//               Register
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+//     </>
 //   );
 // };
 
 // export default Menubar;
 
 import React, { useContext, useState, useEffect } from 'react';
-import './Menubar.css';
-import { assets } from '../../assets/assets.js';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { StoreContext } from '../../context/StoreContext.jsx';
-import Login from '../Login/Login.jsx';
+import { StoreContext } from "../../context/StoreContext";
+import { useAuth } from "../../context/AuthContext";
+import './Menubar.css';
 
-export const Menubar = () => {
-  const [active, setActive] = useState("home");
+const Menubar = () => {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const { quantities } = useContext(StoreContext);
+  const { user, logout } = useAuth();
   const location = useLocation();
-  
-  const uniqueItemInBookingVehicle = Object.values(quantities).filter(qty => qty > 0).length;
+  const navigate = useNavigate();
 
-  // Update active state based on current route
-  useEffect(() => {
-    const path = location.pathname;
-    if (path === '/') setActive('home');
-    else if (path === '/explore') setActive('explore');
-    else if (path === '/contact') setActive('contact-us');
-  }, [location]);
+  // Calculate total items in cart
+  const totalCartItems = Object.values(quantities || {}).reduce((sum, qty) => sum + qty, 0);
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setShowMobileMenu(false);
+  }, [location]);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setShowMobileMenu(false);
   };
 
-  const navigate = useNavigate();
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+  };
+
+  const isActiveRoute = (path) => {
+    return location.pathname === path;
+  };
+
+  const logoSrc = '/logo.png';
 
   return (
-    <nav className={`modern-navbar ${isScrolled ? 'scrolled' : ''}`}>
-      <div className="navbar-container">
-        {/* Logo */}
-        <Link to="/" className="navbar-logo">
-          <img src={assets.logo} alt="Logo" />
-          <span className="logo-text">VehicleRent</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="navbar-menu">
-          <Link 
-            to="/" 
-            className={`nav-item ${active === 'home' ? 'active' : ''}`}
-            onClick={() => setActive('home')}
-          >
-            <span className="nav-icon">🏠</span>
-            Home
-          </Link>
-          <Link 
-            to="/explore" 
-            className={`nav-item ${active === 'explore' ? 'active' : ''}`}
-            onClick={() => setActive('explore')}
-          >
-            <span className="nav-icon">🔍</span>
-            Explore
-          </Link>
-          <Link 
-            to="/contact" 
-            className={`nav-item ${active === 'contact-us' ? 'active' : ''}`}
-            onClick={() => setActive('contact-us')}
-          >
-            <span className="nav-icon">📞</span>
-            Contact Us
-          </Link>
-        </div>
-
-        {/* Right Side Actions */}
-        <div className="navbar-actions">
-          {/* Cart */}
-          <Link to="/booking-vehicle" className="cart-button">
-            <div className="cart-icon-wrapper">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="9" cy="21" r="1"/>
-                <circle cx="20" cy="21" r="1"/>
-                <path d="m1 1 4 4 14 0 -1 8 -13 0"/>
-              </svg>
-              {uniqueItemInBookingVehicle > 0 && (
-                <span className="cart-badge">{uniqueItemInBookingVehicle}</span>
-              )}
-            </div>
+    <>
+      <nav className={`modern-navbar ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="navbar-container">
+          {/* Logo */}
+          <Link className="navbar-logo" to="/">
+            {!imageError ? (
+              <img 
+                src={logoSrc} 
+                alt="Julana Tours" 
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              <div className="logo-fallback">JT</div>
+            )}
+            <span className="logo-text">Julana Tours</span>
           </Link>
 
-          {/* Auth Buttons */}
-          <div className="auth-buttons">
-            <button className="btn-login" onClick={()=> 
-              navigate('/login')}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-              Login
-            </button>
-            <button className="btn-register" onClick={()=> 
-              navigate('/register')}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="m22 11-3-3m0 0-3 3m3-3v12"/>
-              </svg>
-              Register
-            </button>
+          {/* Desktop Navigation */}
+          <div className="navbar-menu">
+            <Link 
+              className={`nav-item ${isActiveRoute('/') ? 'active' : ''}`} 
+              to="/"
+            >
+              <i className="bi bi-house nav-icon"></i>
+              Home
+            </Link>
+            <Link 
+              className={`nav-item ${isActiveRoute('/explore') ? 'active' : ''}`} 
+              to="/explore"
+            >
+              <i className="bi bi-car-front nav-icon"></i>
+              Explore Vehicles
+            </Link>
+            <Link 
+              className={`nav-item ${isActiveRoute('/contact') ? 'active' : ''}`} 
+              to="/contact"
+            >
+              <i className="bi bi-telephone nav-icon"></i>
+              Contact
+            </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button 
-            className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
-            onClick={toggleMobileMenu}
-            aria-label="Toggle mobile menu"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </div>
+          {/* Right Side Actions */}
+          <div className="navbar-actions">
+            {/* Cart - only show when logged in */}
+            {user && (
+              <Link to="/booking-vehicle" className="cart-button">
+                <div className="cart-icon-wrapper">
+                  <i className="bi bi-cart"></i>
+                  {totalCartItems > 0 && (
+                    <span className="cart-badge">{totalCartItems}</span>
+                  )}
+                </div>
+              </Link>
+            )}
 
-      {/* Mobile Menu */}
-      <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-        <div className="mobile-menu-content">
-          <Link 
-            to="/" 
-            className={`mobile-nav-item ${active === 'home' ? 'active' : ''}`}
-            onClick={() => {
-              setActive('home');
-              setIsMobileMenuOpen(false);
-            }}
-          >
-            <span className="nav-icon">🏠</span>
-            Home
-          </Link>
-          <Link 
-            to="/explore" 
-            className={`mobile-nav-item ${active === 'explore' ? 'active' : ''}`}
-            onClick={() => {
-              setActive('explore');
-              setIsMobileMenuOpen(false);
-            }}
-          >
-            <span className="nav-icon">🔍</span>
-            Explore
-          </Link>
-          <Link 
-            to="/contact" 
-            className={`mobile-nav-item ${active === 'contact-us' ? 'active' : ''}`}
-            onClick={() => {
-              setActive('contact-us');
-              setIsMobileMenuOpen(false);
-            }}
-          >
-            <span className="nav-icon">📞</span>
-            Contact Us
-          </Link>
-          
-          <div className="mobile-auth-section">
-            <button className="mobile-btn-login" >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-              Login
-            </button>
-            <button className="mobile-btn-register" >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="m22 11-3-3m0 0-3 3m3-3v12"/>
-              </svg>
-              Register
+            {/* Auth buttons - show when not logged in */}
+            {!user && (
+              <div className="auth-buttons">
+                <Link to="/login" className="btn-login">
+                  <i className="bi bi-box-arrow-in-right"></i>
+                  Login
+                </Link>
+                <Link to="/register" className="btn-register">
+                  <i className="bi bi-person-plus"></i>
+                  Register
+                </Link>
+              </div>
+            )}
+
+            {/* User info when logged in */}
+            {user && (
+              <>
+                <div className="nav-item" style={{ cursor: 'default' }}>
+                  <i className="bi bi-person-circle nav-icon"></i>
+                  <span>{user?.email?.split('@')[0] || 'User'}</span>
+                </div>
+                <button 
+                  className="btn-login" 
+                  onClick={handleLogout}
+                  style={{ background: 'transparent', border: '2px solid #ff6b6b', color: '#ff6b6b' }}
+                >
+                  <i className="bi bi-box-arrow-right"></i>
+                  Logout
+                </button>
+              </>
+            )}
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className={`mobile-menu-toggle ${showMobileMenu ? 'open' : ''}`}
+              onClick={toggleMobileMenu}
+              aria-label="Toggle menu"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
             </button>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
+      {showMobileMenu && (
         <div 
-          className="mobile-menu-overlay" 
-          onClick={() => setIsMobileMenuOpen(false)}
+          className="mobile-menu-overlay"
+          onClick={() => setShowMobileMenu(false)}
         />
       )}
-    </nav>
+
+      {/* Mobile Menu */}
+      <div className={`mobile-menu ${showMobileMenu ? 'open' : ''}`}>
+        <div className="mobile-menu-content">
+          <Link 
+            className={`mobile-nav-item ${isActiveRoute('/') ? 'active' : ''}`} 
+            to="/"
+          >
+            <i className="bi bi-house"></i>
+            Home
+          </Link>
+          <Link 
+            className={`mobile-nav-item ${isActiveRoute('/explore') ? 'active' : ''}`} 
+            to="/explore"
+          >
+            <i className="bi bi-car-front"></i>
+            Explore Vehicles
+          </Link>
+          <Link 
+            className={`mobile-nav-item ${isActiveRoute('/contact') ? 'active' : ''}`} 
+            to="/contact"
+          >
+            <i className="bi bi-telephone"></i>
+            Contact
+          </Link>
+          
+          {/* Mobile auth section */}
+          {!user && (
+            <div className="mobile-auth-section">
+              <Link to="/login" className="mobile-btn-login">
+                <i className="bi bi-box-arrow-in-right"></i>
+                Login
+              </Link>
+              <Link to="/register" className="mobile-btn-register">
+                <i className="bi bi-person-plus"></i>
+                Register
+              </Link>
+            </div>
+          )}
+
+          {/* Mobile user info when logged in */}
+          {user && (
+            <div className="mobile-user-section">
+              <div className="mobile-nav-item" style={{ cursor: 'default' }}>
+                <i className="bi bi-person-circle"></i>
+                <span>{user?.email?.split('@')[0] || 'User'}</span>
+              </div>
+              <button 
+                className="mobile-btn-logout" 
+                onClick={handleLogout}
+              >
+                <i className="bi bi-box-arrow-right"></i>
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 

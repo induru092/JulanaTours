@@ -15,10 +15,13 @@ export const ExploreVehicle = () => {
           <form onSubmit={(e) => e.preventDefault()}>
             <div className="input-group mb-3">
               <select className='form-select mt-2' style={{maxWidth: '150px'}} onChange={(e) => setCategory(e.target.value)}>
-                <option value="SUV">SUV</option>
                 <option value="Sedan">Sedan</option>
-                <option value="Hatchback">Hatchback</option>
-                <option value="Truck">Truck</option>
+                <option value="SUV">SUV</option>
+                <option value="Truck">Car</option>
+                <option value="Bus">Bus</option>
+                <option value="Motorcycle">Motorcycle</option>
+                <option value="Van">Van</option>
+                <option value="Convertible">Threewheel(Tuk-Tuk)</option>
               </select>
               <input type="text" className="form-control mt-2" placeholder="Search vehicles..." 
                 onChange={(e) => setSearchText(e.target.value)} value={searchText} />

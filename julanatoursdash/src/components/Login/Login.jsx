@@ -1,13 +1,224 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { useAuth } from "../../context/AuthContext";
+// import './Login.css';
+// import authService from "../../service/authService";
+
+// export const Login = () => {
+//   const { login, loading } = useAuth();
+//   const navigate = useNavigate();
+  
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [formData, setFormData] = useState({
+//     email: '',
+//     password: '',
+//     remember: false
+//   });
+//   const [error, setError] = useState('');
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+
+//   const handleInputChange = (e) => {
+//     const { name, value, type, checked } = e.target;
+//     setFormData(prev => ({
+//       ...prev,
+//       [name]: type === 'checkbox' ? checked : value
+//     }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setIsSubmitting(true);
+//     setError('');
+
+//     try {
+//       const credentials = {
+//         email: formData.email,
+//         password: formData.password
+//       };
+
+//       await login(credentials);
+//       navigate('/'); // Redirect to home after successful login
+//     } catch (error) {
+//       console.error('Login error:', error);
+//       setError(error.message || 'Login failed. Please try again.');
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   const togglePasswordVisibility = () => {
+//     setShowPassword(!showPassword);
+//   };
+
+//   if (loading) {
+//     return (
+//       <div className="login-container">
+//         <div className="loading-spinner">
+//           <div className="spinner"></div>
+//           <p>Loading...</p>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="login-container">
+//       <div className="login-card">
+//         <div className="login-header">
+//           <div className="login-icon">
+//             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+//               <circle cx="12" cy="7" r="4"/>
+//             </svg>
+//           </div>
+//           <h1 className="login-title">Welcome Back!</h1>
+//           <p className="login-subtitle">Sign in to access Julana Tours</p>
+//         </div>
+
+//         <form className="login-form" onSubmit={handleSubmit}>
+//           {error && (
+//             <div className="error-message">
+//               <span className="error-icon">⚠️</span>
+//               {error}
+//             </div>
+//           )}
+          
+//           <div className="form-group">
+//             <label className="form-label">Email Address</label>
+//             <div className="input-wrapper">
+//               <input
+//                 type="email"
+//                 name="email"
+//                 className="form-input"
+//                 placeholder="Enter your email"
+//                 value={formData.email}
+//                 onChange={handleInputChange}
+//                 required
+//                 disabled={isSubmitting}
+//               />
+//               <div className="input-icon">
+//                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+//                   <polyline points="22,6 12,13 2,6"/>
+//                 </svg>
+//               </div>
+//             </div>
+//           </div>
+
+//           <div className="form-group">
+//             <label className="form-label">Password</label>
+//             <div className="input-wrapper">
+//               <input
+//                 type={showPassword ? "text" : "password"}
+//                 name="password"
+//                 className="form-input"
+//                 placeholder="Enter your password"
+//                 value={formData.password}
+//                 onChange={handleInputChange}
+//                 required
+//                 disabled={isSubmitting}
+//               />
+//               <button
+//                 type="button"
+//                 className="password-toggle"
+//                 onClick={togglePasswordVisibility}
+//                 disabled={isSubmitting}
+//               >
+//                 {showPassword ? (
+//                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//                     <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+//                     <line x1="1" y1="1" x2="23" y2="23"/>
+//                   </svg>
+//                 ) : (
+//                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+//                     <circle cx="12" cy="12" r="3"/>
+//                   </svg>
+//                 )}
+//               </button>
+//             </div>
+//           </div>
+
+//           <div className="form-options">
+//             <div className="checkbox-wrapper">
+//               <input
+//                 type="checkbox"
+//                 id="remember"
+//                 name="remember"
+//                 className="form-checkbox"
+//                 checked={formData.remember}
+//                 onChange={handleInputChange}
+//                 disabled={isSubmitting}
+//               />
+//               <label htmlFor="remember" className="checkbox-label">Remember me</label>
+//             </div>
+//             <a href="#" className="forgot-link">Forgot password?</a>
+//           </div>
+
+//           <button 
+//             type="submit" 
+//             className={`login-button ${isSubmitting ? 'submitting' : ''}`}
+//             disabled={isSubmitting}
+//           >
+//             {isSubmitting ? (
+//               <>
+//                 <div className="spinner"></div>
+//                 <span>Signing In...</span>
+//               </>
+//             ) : (
+//               <>
+//                 <span>Sign In</span>
+//                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+//                   <path d="M5 12h14M12 5l7 7-7 7"/>
+//                 </svg>
+//               </>
+//             )}
+//           </button>
+
+//           <div className="register-link">
+//             Don't have an account? <a href="/register">Create account</a>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useAuth } from "../../context/AuthContext";
 import './Login.css';
 
 export const Login = () => {
+  const { login, loading, user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     remember: false
   });
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      const from = location.state?.from || '/';
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, location.state]);
+
+  // Show message from location state (e.g., "Please login to book")
+  useEffect(() => {
+    if (location.state?.message) {
+      setError(location.state.message);
+    }
+  }, [location.state]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -15,21 +226,108 @@ export const Login = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    if (!formData.email) {
+      setError('Email is required');
+      return false;
+    }
+    if (!formData.email.includes('@')) {
+      setError('Please enter a valid email address');
+      return false;
+    }
+    if (!formData.password) {
+      setError('Password is required');
+      return false;
+    }
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login attempt:', formData);
-    // Add your login logic here
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const credentials = {
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
+        remember: formData.remember
+      };
+
+      await login(credentials);
+      
+      // The redirect will happen automatically via the useEffect above
+      console.log('Login successful');
+      
+    } catch (error) {
+      console.error('Login error:', error);
+      
+      // Handle different types of errors
+      if (error.response?.status === 401) {
+        setError('Invalid email or password. Please try again.');
+      } else if (error.response?.status === 429) {
+        setError('Too many login attempts. Please try again later.');
+      } else if (error.message) {
+        setError(error.message);
+      } else {
+        setError('Login failed. Please check your connection and try again.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleForgotPassword = () => {
+    console.log('Forgot password clicked');
+    // You can navigate to forgot password page or show modal
+  };
+
+  const handleSocialLogin = (provider) => {
+    console.log(`${provider} login clicked`);
+    // Implement social login logic
+  };
+
+  if (loading) {
+    return (
+      <div className="login-container">
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="login-container">
       <div className="login-card">
+        {/* Back to Home Link */}
+        <div className="back-navigation">
+          <Link to="/" className="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+          </Link>
+        </div>
+
         <div className="login-header">
           <div className="login-icon">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -38,21 +336,34 @@ export const Login = () => {
             </svg>
           </div>
           <h1 className="login-title">Welcome Back!</h1>
-          <p className="login-subtitle">Sign in to your account to continue</p>
+          <p className="login-subtitle">Sign in to access Julana Tours</p>
         </div>
 
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit} noValidate>
+          {error && (
+            <div className="error-message">
+              <span className="error-icon">⚠️</span>
+              {error}
+            </div>
+          )}
+          
           <div className="form-group">
-            <label className="form-label">Email Address</label>
+            <label className="form-label" htmlFor="email">
+              Email Address
+            </label>
             <div className="input-wrapper">
               <input
+                id="email"
                 type="email"
                 name="email"
-                className="form-input"
+                className={`form-input ${error && !formData.email ? 'error' : ''}`}
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleInputChange}
                 required
+                disabled={isSubmitting}
+                autoComplete="email"
+                autoFocus
               />
               <div className="input-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -64,21 +375,29 @@ export const Login = () => {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Password</label>
+            <label className="form-label" htmlFor="password">
+              Password
+            </label>
             <div className="input-wrapper">
               <input
+                id="password"
                 type={showPassword ? "text" : "password"}
                 name="password"
-                className="form-input"
+                className={`form-input ${error && !formData.password ? 'error' : ''}`}
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleInputChange}
                 required
+                disabled={isSubmitting}
+                autoComplete="current-password"
+                minLength="6"
               />
               <button
                 type="button"
                 className="password-toggle"
                 onClick={togglePasswordVisibility}
+                disabled={isSubmitting}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -104,17 +423,40 @@ export const Login = () => {
                 className="form-checkbox"
                 checked={formData.remember}
                 onChange={handleInputChange}
+                disabled={isSubmitting}
               />
-              <label htmlFor="remember" className="checkbox-label">Remember me</label>
+              <label htmlFor="remember" className="checkbox-label">
+                Remember me
+              </label>
             </div>
-            <a href="#" className="forgot-link">Forgot password?</a>
+            <button 
+              type="button"
+              className="forgot-link"
+              onClick={handleForgotPassword}
+              disabled={isSubmitting}
+            >
+              Forgot password?
+            </button>
           </div>
 
-          <button type="submit" className="login-button">
-            <span>Sign In</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
+          <button 
+            type="submit" 
+            className={`login-button ${isSubmitting ? 'submitting' : ''}`}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <div className="spinner"></div>
+                <span>Signing In...</span>
+              </>
+            ) : (
+              <>
+                <span>Sign In</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </>
+            )}
           </button>
 
           <div className="divider">
@@ -122,7 +464,12 @@ export const Login = () => {
           </div>
 
           <div className="social-buttons">
-            <button type="button" className="social-button google">
+            <button 
+              type="button" 
+              className="social-button google" 
+              onClick={() => handleSocialLogin('google')}
+              disabled={isSubmitting}
+            >
               <svg width="20" height="20" viewBox="0 0 24 24">
                 <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -131,7 +478,12 @@ export const Login = () => {
               </svg>
               Google
             </button>
-            <button type="button" className="social-button facebook">
+            <button 
+              type="button" 
+              className="social-button facebook" 
+              onClick={() => handleSocialLogin('facebook')}
+              disabled={isSubmitting}
+            >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877f2">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
@@ -140,7 +492,10 @@ export const Login = () => {
           </div>
 
           <div className="register-link">
-            Don't have an account? <a href="#" className="register-text">Create account</a>
+            Don't have an account? {' '}
+            <Link to="/register" className="register-text">
+              Create account
+            </Link>
           </div>
         </form>
       </div>

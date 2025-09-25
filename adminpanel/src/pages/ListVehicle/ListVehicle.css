@@ -1,3 +1,376 @@
-.table td {
+/* .table td {
     vertical-align: middle;
+}
+
+.vehicle-list-container {
+  padding: 20px;
+}
+
+.vehicle-list-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.vehicle-list-header h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.vehicle-list-header p {
+  color: #666;
+  font-size: 16px;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container {
+  text-align: center;
+  padding: 40px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 20px;
+}
+
+.error-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.error-container h2 {
+  color: #dc3545;
+  margin-bottom: 16px;
+}
+
+.error-container p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.retry-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.retry-button:hover {
+  background: #0056b3;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 20px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.empty-state h2 {
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  color: #666;
+}
+
+.vehicles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.vehicle-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.vehicle-image {
+  height: 200px;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder-image {
+  font-size: 48px;
+  color: #ccc;
+}
+
+.vehicle-info {
+  padding: 20px;
+}
+
+.vehicle-info h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.vehicle-type {
+  color: #666;
+  margin: 0 0 8px 0;
+  font-size: 14px;
+}
+
+.vehicle-price {
+  color: #007bff;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0 0 16px 0;
+}
+
+.vehicle-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-view, .btn-edit {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-view {
+  background: #007bff;
+  color: white;
+}
+
+.btn-view:hover {
+  background: #0056b3;
+}
+
+.btn-edit {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #545862;
+} */
+
+/* Add these styles to your ListVehicle.css file */
+
+/* Delete Button Styles */
+/* Add these styles to your ListVehicle.css file */
+
+/* Vehicle Card Styles */
+.vehicle-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Vehicle Image Container */
+.vehicle-image {
+  width: 100%;
+  height: 200px; /* Fixed height for consistency */
+  overflow: hidden;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Vehicle Image */
+.vehicle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintains aspect ratio while filling container */
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.vehicle-card:hover .vehicle-img {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Placeholder Image */
+.placeholder-image {
+  font-size: 64px;
+  color: #dee2e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f8f9fa;
+  border: 2px dashed #dee2e6;
+}
+
+/* Vehicle Info Section */
+.vehicle-info {
+  padding: 16px;
+}
+
+.vehicle-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #212529;
+  line-height: 1.3;
+}
+
+.vehicle-type {
+  margin: 0 0 8px 0;
+  color: #6c757d;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.vehicle-price {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #28a745;
+}
+
+/* Vehicle Actions */
+.vehicle-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.vehicle-actions button {
+  flex: 1;
+  min-width: 70px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+.btn-view {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-view:hover {
+  background-color: #0056b3;
+}
+
+.btn-edit {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #1e7e34;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+/* Vehicles Grid */
+.vehicles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 20px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vehicles-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  
+  .vehicle-image {
+    height: 180px; /* Smaller height on mobile */
+  }
+  
+  .vehicle-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .vehicle-actions button {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .vehicles-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+  
+  .vehicle-image {
+    height: 160px;
+  }
 }

@@ -7,9 +7,13 @@
 
 .main-content {
   flex: 1;
-  padding-top: 80px; /* Account for fixed navbar */
+  padding-top: 20px; /* Account for fixed navbar */
 }
-
+.hero-wrapper {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 /* Hero Section */
 .hero-wrapper {
   margin-bottom: 4rem;
