@@ -102,9 +102,11 @@ const AddVehicle = () => {
                                 >
                                     <option value="Sedan">Sedan</option>
                                     <option value="SUV">SUV</option>
-                                    <option value="Truck">Truck</option>
+                                    <option value="Truck">Car</option>
+                                    <option value="Bus">Bus</option>
                                     <option value="Motorcycle">Motorcycle</option>
                                     <option value="Van">Van</option>
+                                    <option value="Convertible">Threewheel(Tuk-Tuk)</option>
                                 </select>
                             </div>
                             <div className="mb-3">
