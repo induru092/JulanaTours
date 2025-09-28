@@ -372,8 +372,8 @@ const ListVehicle = () => {
                   Rs.{vehicle.price || vehicle.pricePerDay || 0}/day
                 </p>
                 <div className="vehicle-actions">
-                  <button className="btn-view">View Details</button>
-                  <button className="btn-edit">Edit</button>
+                  {/*<button className="btn-view">View Details</button>
+                  <button className="btn-edit">Edit</button>*/}
                   <button 
                     className="btn-delete"
                     onClick={() => openDeleteModal(vehicle.id, vehicle.name)}

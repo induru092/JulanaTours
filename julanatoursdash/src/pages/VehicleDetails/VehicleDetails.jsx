@@ -812,7 +812,7 @@ export const VehicleDetails = () => {
                                         </button>
                                         
                                         <span className="ms-3 text-muted">
-                                            in cart
+                                            in days 
                                         </span>
                                     </div>
                                 ) : (
@@ -822,7 +822,7 @@ export const VehicleDetails = () => {
                                         onClick={handleAddToCart}
                                     >
                                         <i className="bi bi-cart-plus me-2"></i>
-                                        Add to Cart
+                                        Booking Vehicle
                                     </button>
                                 )
                             ) : (
