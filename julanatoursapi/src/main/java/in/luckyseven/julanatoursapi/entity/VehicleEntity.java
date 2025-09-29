@@ -21,4 +21,7 @@ public class VehicleEntity {
     private double price;
     private String category;
     private String imageUrl;
+
+    @Builder.Default  // Add this annotation
+    private boolean available = true;
 }

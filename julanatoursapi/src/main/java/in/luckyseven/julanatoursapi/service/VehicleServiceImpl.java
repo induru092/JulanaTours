@@ -173,6 +173,23 @@ public class VehicleServiceImpl implements VehicleService {
     private ObjectMapper objectMapper;
 
     @Override
+    public VehicleResponse toggleAvailability(String id, boolean available) {
+        log.info("Toggling availability for vehicle ID: {} to {}", id, available);
+
+        VehicleEntity existingVehicle = vehicleRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.error("Vehicle not found for ID: {}", id);
+                    return new RuntimeException("Vehicle not found for the id: " + id);
+                });
+
+        existingVehicle.setAvailable(available);
+        VehicleEntity updatedVehicle = vehicleRepository.save(existingVehicle);
+
+        log.info("Vehicle availability updated successfully for ID: {}", id);
+        return convertToResponse(updatedVehicle);
+    }
+
+    @Override
     public String uploadFile(MultipartFile file) {
         String filenameExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
         String key = UUID.randomUUID().toString()+"."+filenameExtension;
@@ -322,6 +339,7 @@ public class VehicleServiceImpl implements VehicleService {
                 .description(request.getDescription())
                 .category(request.getCategory())
                 .price(request.getPrice())
+                .available(request.isAvailable())
                 .build();
 
         log.debug("Created entity: name={}, description={}, category={}, price={}",
@@ -345,6 +363,7 @@ public class VehicleServiceImpl implements VehicleService {
                 .category(entity.getCategory())
                 .price(entity.getPrice())
                 .imageUrl(entity.getImageUrl())
+                .available(entity.isAvailable())
                 .build();
 
         log.debug("Created response: id={}, name={}, description={}, category={}, price={}, imageUrl={}",

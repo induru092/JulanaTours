@@ -531,6 +531,42 @@ public class VehicleController {
     // UPDATE METHOD REMOVED - Not available in your current VehicleService interface
     // You can add updateVehicle method to your VehicleService interface if needed
 
+    @PatchMapping("/{id}/availability")
+    public ResponseEntity<?> toggleAvailability(
+            @PathVariable String id,
+            @RequestBody Map<String, Boolean> request,
+            Authentication authentication) {
+        try {
+            log.info("Toggling availability for vehicle {} by user: {}",
+                    id, authentication != null ? authentication.getName() : "anonymous");
+
+            if (id == null || id.trim().isEmpty()) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("message", "Invalid vehicle ID"));
+            }
+
+            Boolean available = request.get("available");
+            if (available == null) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("message", "Available status is required"));
+            }
+
+            VehicleResponse response = vehicleService.toggleAvailability(id.trim(), available);
+
+            log.info("Successfully toggled availability for vehicle ID: {} to {}", id, available);
+            return ResponseEntity.ok(response);
+
+        } catch (RuntimeException e) {
+            log.error("Vehicle not found with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Vehicle not found with ID: " + id));
+        } catch (Exception e) {
+            log.error("Error toggling availability for vehicle {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Failed to update vehicle availability: " + e.getMessage()));
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteVehicle(@PathVariable String id, Authentication authentication) {
         try {

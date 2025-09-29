@@ -16,4 +16,6 @@ public class VehicleRequest {
     private double price;
     private String category;
 
+    private boolean available = true;
+
 }

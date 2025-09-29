@@ -192,7 +192,7 @@ export const VehicleDisplay = ({category, searchText}) => {
                                     <rect x="3" y="14" width="7" height="7"/>
                                 </svg>
                             </button>
-                            <button 
+                            {/* <button 
                                 className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
                                 onClick={() => setViewMode('list')}
                                 aria-label="List view"
@@ -205,7 +205,7 @@ export const VehicleDisplay = ({category, searchText}) => {
                                     <line x1="3" y1="12" x2="3.01" y2="12"/>
                                     <line x1="3" y1="18" x2="3.01" y2="18"/>
                                 </svg>
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>
@@ -217,13 +217,15 @@ export const VehicleDisplay = ({category, searchText}) => {
                     <div className={`vehicles-container ${viewMode}-view`}>
                         <div className="row">
                             {processedVehicles.map((vehicle, index) => (
-                                <VehicleItem 
-                                    key={vehicle.id || index} 
-                                    name={vehicle.name} 
-                                    description={vehicle.description}
+                                <VehicleItem
+                                    key={vehicle.id}
                                     id={vehicle.id}
+                                    name={vehicle.name}
+                                    description={vehicle.description}
                                     imageUrl={vehicle.imageUrl}
-                                    price={vehicle.price} 
+                                    price={vehicle.price}
+                                    category={vehicle.category}
+                                    available={vehicle.available !== false} // Make sure this is passed
                                 />
                             ))}
                         </div>

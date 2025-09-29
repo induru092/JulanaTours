@@ -271,4 +271,15 @@ export const fetchOrderStats = async () => {
     }
 };
 
+export const toggleVehicleAvailability = async (vehicleId, available) => {
+    try {
+        console.log(`Toggling vehicle ${vehicleId} availability to ${available}`);
+        const response = await api.patch(`/vehicles/${vehicleId}/availability`, { available });
+        return response.data;
+    } catch (error) {
+        console.error('Error toggling vehicle availability:', error);
+        throw error;
+    }
+}
+
 export default api;

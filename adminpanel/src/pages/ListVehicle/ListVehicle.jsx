@@ -194,8 +194,9 @@
 
 // export default ListVehicle;
 
+
 import React, { useState, useEffect } from 'react';
-import { fetchVehiclesList, deleteVehicle } from '../../services/vehicleService';
+import { fetchVehiclesList, deleteVehicle, toggleVehicleAvailability } from '../../services/vehicleService';
 import authService from '../../services/authService';
 import { toast } from 'react-toastify';
 import './ListVehicle.css';
@@ -210,6 +211,7 @@ const ListVehicle = () => {
     vehicleName: '',
     isDeleting: false
   });
+  const [togglingVehicles, setTogglingVehicles] = useState(new Set());
 
   useEffect(() => {
     fetchList();
@@ -220,7 +222,6 @@ const ListVehicle = () => {
       setLoading(true);
       setError('');
       
-      // Check if user is authenticated
       if (!authService.isAuthenticated()) {
         setError('You must be logged in to view vehicles');
         return;
@@ -237,13 +238,49 @@ const ListVehicle = () => {
       
       if (error.response?.status === 401) {
         setError('Session expired. Please login again.');
-        // Clear invalid token and redirect
         authService.logout();
       } else {
         setError(error.message || 'Failed to fetch vehicles');
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleToggleAvailability = async (vehicleId, currentStatus) => {
+    try {
+      setTogglingVehicles(prev => new Set(prev).add(vehicleId));
+      
+      const newStatus = !currentStatus;
+      const response = await toggleVehicleAvailability(vehicleId, newStatus);
+      
+      // Update local state
+      setVehicles(prevVehicles =>
+        prevVehicles.map(vehicle =>
+          vehicle.id === vehicleId
+            ? { ...vehicle, available: newStatus }
+            : vehicle
+        )
+      );
+      
+      toast.success(`Vehicle ${newStatus ? 'enabled' : 'disabled'} successfully`);
+    } catch (error) {
+      console.error('Error toggling vehicle availability:', error);
+      
+      if (error.response?.status === 404) {
+        toast.error('Vehicle not found');
+      } else if (error.response?.status === 401) {
+        toast.error('Session expired. Please login again.');
+        authService.logout();
+      } else {
+        toast.error('Failed to update vehicle availability');
+      }
+    } finally {
+      setTogglingVehicles(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(vehicleId);
+        return newSet;
+      });
     }
   };
 
@@ -261,7 +298,7 @@ const ListVehicle = () => {
   };
 
   const closeDeleteModal = () => {
-    if (deleteModal.isDeleting) return; // Prevent closing while deleting
+    if (deleteModal.isDeleting) return;
     
     setDeleteModal({
       isOpen: false,
@@ -278,7 +315,6 @@ const ListVehicle = () => {
       const success = await deleteVehicle(deleteModal.vehicleId);
       
       if (success) {
-        // Remove the deleted vehicle from the local state
         setVehicles(prevVehicles => 
           prevVehicles.filter(vehicle => vehicle.id !== deleteModal.vehicleId)
         );
@@ -293,7 +329,6 @@ const ListVehicle = () => {
       
       if (error.response?.status === 404) {
         toast.error('Vehicle not found');
-        // Remove from local state if it doesn't exist on server
         setVehicles(prevVehicles => 
           prevVehicles.filter(vehicle => vehicle.id !== deleteModal.vehicleId)
         );
@@ -353,7 +388,7 @@ const ListVehicle = () => {
       ) : (
         <div className="vehicles-grid">
           {vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="vehicle-card">
+            <div key={vehicle.id} className={`vehicle-card ${!vehicle.available ? 'unavailable' : ''}`}>
               <div className="vehicle-image">
                 {vehicle.imageUrl ? (
                   <img 
@@ -364,6 +399,11 @@ const ListVehicle = () => {
                 ) : (
                   <div className="placeholder-image">🚗</div>
                 )}
+                {!vehicle.available && (
+                  <div className="unavailable-overlay">
+                    <span>UNAVAILABLE</span>
+                  </div>
+                )}
               </div>
               <div className="vehicle-info">
                 <h3>{vehicle.name || 'Unknown Vehicle'}</h3>
@@ -371,9 +411,27 @@ const ListVehicle = () => {
                 <p className="vehicle-price">
                   Rs.{vehicle.price || vehicle.pricePerDay || 0}/day
                 </p>
+                
+                <div className="availability-toggle">
+                  <button
+                    className={`btn-toggle ${vehicle.available ? 'available' : 'unavailable'}`}
+                    onClick={() => handleToggleAvailability(vehicle.id, vehicle.available)}
+                    disabled={togglingVehicles.has(vehicle.id)}
+                  >
+                    {togglingVehicles.has(vehicle.id) ? (
+                      <>
+                        <span className="toggle-spinner"></span>
+                        Updating...
+                      </>
+                    ) : (
+                      <>
+                        {vehicle.available ? '✓ Available' : '✗ Unavailable'}
+                      </>
+                    )}
+                  </button>
+                </div>
+
                 <div className="vehicle-actions">
-                  {/*<button className="btn-view">View Details</button>
-                  <button className="btn-edit">Edit</button>*/}
                   <button 
                     className="btn-delete"
                     onClick={() => openDeleteModal(vehicle.id, vehicle.name)}

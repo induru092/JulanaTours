@@ -82,4 +82,14 @@ public interface VehicleService {
      * @throws RuntimeException if vehicle not found
      */
     void deleteVehicle(String id);
+
+    /**
+     * Toggle vehicle availability status
+     * @param id Vehicle ID
+     * @param available New availability status (true = available, false = unavailable)
+     * @return Updated vehicle response
+     * @throws RuntimeException if vehicle not found
+     */
+    VehicleResponse toggleAvailability(String id, boolean available);
+
 }
